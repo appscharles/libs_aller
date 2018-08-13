@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'com.jfrog.bintray' version '1.8.3'
+}
+
+group 'com.appscharles.libs'
+version '1.0.0.0-dev0'
+
+sourceCompatibility = 1.8
+
+apply from: 'gradle/UTF8Encoder.gradle'
+apply from: 'gradle/BintrayPublisher.gradle'
+apply from: 'gradle/SourceSetter.gradle'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'http://dl.bintray.com/appscharles/libs'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
