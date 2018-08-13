@@ -1,10 +1,13 @@
 package com.appscharles.libs.aller.getters;
 
+import com.appscharles.libs.aller.accesses.ApiKeyAccess;
+import com.appscharles.libs.aller.builders.ApiKeyAccessBuilder;
 import com.appscharles.libs.aller.exceptions.AllerException;
 import com.appscharles.libs.aller.senders.UrlRequestHttpSender;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.Executors;
@@ -21,9 +24,11 @@ import java.util.concurrent.Executors;
 public class AuthorizeCodeGetterTest {
 
     @Test
-    public void shouldGetAuthorizeCode() throws AllerException {
-        Integer port = 3211;
-        AuthorizeCodeGetter getter = new AuthorizeCodeGetter("1wetetetc7b04a83rr0331c41bdc2", 5* 60000, port);
+    public void shouldGetAuthorizeCode() throws AllerException, MalformedURLException {
+        Integer port = 15001;
+        ApiKeyAccess apiKeyAccess = ApiKeyAccessBuilder.create(new File(System.getProperty("user.home"), "appscharles/libs/aller/properties.properties")).build();
+        AuthorizeCodeGetter getter = new AuthorizeCodeGetter(apiKeyAccess.getClientId(), 5* 60000, port);
+        getter.setAuthorizationEndPoint(new URL("https://allegro.pl.allegrosandbox.pl/auth/oauth/"));
         getter.enableTest();
         Executors.newSingleThreadExecutor().submit(()->{
             try {
@@ -36,10 +41,12 @@ public class AuthorizeCodeGetterTest {
         Assert.assertEquals(getter.get(), "code_test");
     }
 
-    @Test(expected = AllerException.class)
-    public void shouldGetAuthorizeCode2() throws AllerException {
-        Integer port = 3212;
-        AuthorizeCodeGetter getter = new AuthorizeCodeGetter("1wetetetc7b04a83rr0331c41bdc2", 10000, port);
-        Assert.assertEquals(getter.get(), "code_test");
+    @Test
+    public void shouldGetAuthorizeCode2() throws AllerException, MalformedURLException {
+        Integer port = 11001;
+        ApiKeyAccess apiKeyAccess = ApiKeyAccessBuilder.create(new File(System.getProperty("user.home"), "appscharles/libs/aller/properties.properties")).build();
+        AuthorizeCodeGetter getter = new AuthorizeCodeGetter(apiKeyAccess.getClientId(), 100000, port);
+        getter.setAuthorizationEndPoint(new URL("https://allegro.pl.allegrosandbox.pl/auth/oauth/"));
+        Assert.assertFalse(getter.get().isEmpty());
     }
 }

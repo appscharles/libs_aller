@@ -10,7 +10,7 @@ import java.net.URL;
 /**
  * The type Url request http sender.
  */
-public class UrlRequestHttpSender {
+public class UrlRequestHttpSender implements IHttpSender {
 
     private URL url;
 

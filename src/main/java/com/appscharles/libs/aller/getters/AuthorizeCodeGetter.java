@@ -18,14 +18,18 @@ import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
  * The type Authorize code getter.
  */
 public class AuthorizeCodeGetter extends AbstractAuthorizeCodeGetter {
+
+    private final static String DEFAULT_AUTHORIZATION_END_POINT = "https://allegro.pl/auth/oauth/";
 
     private static final Logger logger = LogManager.getLogger(AuthorizeCodeGetter.class);
 
@@ -39,7 +43,7 @@ public class AuthorizeCodeGetter extends AbstractAuthorizeCodeGetter {
 
     private String iconStageResource;
 
-    private String patternAllegroTokenUrl;
+    private URL authorizationEndPoint;
 
     private String clientId;
 
@@ -54,12 +58,18 @@ public class AuthorizeCodeGetter extends AbstractAuthorizeCodeGetter {
         this.clientId = clientId;
         this.timeout = timeout;
         this.redirectPorts = redirectPorts;
-        this.patternAllegroTokenUrl = "https://allegro.pl/auth/oauth/authorize?response_type=code&client_id=%1$s&redirect_uri=%2$s";
         this.resourceBundle = ResourceBundle.getBundle("com/appscharles/libs/aller/getters/translations/OpenBrowser", new UTF8Control());
     }
 
     public String get() throws AllerException {
+        try {
+            this.authorizationEndPoint = (this.authorizationEndPoint == null)? new URL(DEFAULT_AUTHORIZATION_END_POINT) : this.authorizationEndPoint;
+        } catch (MalformedURLException e) {
+           throw new AllerException(e);
+        }
         Integer port = AvailablePortGetter.get(this.redirectPorts);
+        String patternAllegroAuthorizeUrl = this.authorizationEndPoint + "authorize?response_type=code&client_id=%1$s&redirect_uri=%2$s";
+        String redirectUrl = "http://localhost:" + port;
         AuthorizationCodeListener codeListener = new AuthorizationCodeListener(port, this.timeout);
         if (this.htmlSuccessResponse != null) {
             codeListener.setHtmlSuccessResponse(this.htmlSuccessResponse);
@@ -71,7 +81,6 @@ public class AuthorizeCodeGetter extends AbstractAuthorizeCodeGetter {
         ObjectProperty<Alert> alertError = new SimpleObjectProperty<>();
         StringProperty code = new SimpleStringProperty();
         if (this.test == false) {
-            String redirectUrl = "http://localhost:" + port;
             PlatformImpl.startup(() -> {
             });
             PlatformImpl.runAndWait(() -> {
@@ -79,12 +88,12 @@ public class AuthorizeCodeGetter extends AbstractAuthorizeCodeGetter {
                         .setHeaderText(this.resourceBundle.getString("dialog.content_text.open_browser_and_authorize"))
                         .setIconStageResource((this.iconStageResource != null) ? this.iconStageResource : "/com/appscharles/libs/aller/getters/OpenBrowserIcon.png");
                 alert.setValue(alertFactory.build());
-                Hyperlink hyperlink = new Hyperlink(String.format(this.patternAllegroTokenUrl, "\n" + this.clientId, redirectUrl));
+                Hyperlink hyperlink = new Hyperlink(String.format(patternAllegroAuthorizeUrl, "\n" + this.clientId, redirectUrl));
                 hyperlink.setFocusTraversable(false);
                 hyperlink.setOnAction((event) -> {
                     if (Desktop.isDesktopSupported()) {
                         try {
-                            Desktop.getDesktop().browse(new URI(String.format(this.patternAllegroTokenUrl, this.clientId, redirectUrl)));
+                            Desktop.getDesktop().browse(new URI(String.format(patternAllegroAuthorizeUrl, this.clientId, redirectUrl)));
                         } catch (IOException | URISyntaxException e) {
                             logger.error(e);
                         }
@@ -154,5 +163,14 @@ public class AuthorizeCodeGetter extends AbstractAuthorizeCodeGetter {
      */
     public void setIconStageResource(String iconStageResource) {
         this.iconStageResource = iconStageResource;
+    }
+
+    /**
+     * Setter for property 'authorizationEndPoint'.
+     *
+     * @param authorizationEndPoint Value to set for property 'authorizationEndPoint'.
+     */
+    public void setAuthorizationEndPoint(URL authorizationEndPoint) {
+        this.authorizationEndPoint = authorizationEndPoint;
     }
 }

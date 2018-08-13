@@ -3,7 +3,7 @@ package com.appscharles.libs.aller.getters;
 /**
  * The type Abstract authorize code getter.
  */
-public abstract class AbstractAuthorizeCodeGetter implements IAuthorizeCodeGetter {
+public abstract class AbstractAuthorizeCodeGetter implements IAuthorizeCodeGetter, ISetTestable {
 
     protected Boolean test;
 
