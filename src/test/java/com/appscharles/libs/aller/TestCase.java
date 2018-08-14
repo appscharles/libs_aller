@@ -10,5 +10,4 @@ public class TestCase {
 
     @Rule
     public TemporaryFolder temp = new TemporaryFolder();
-
 }

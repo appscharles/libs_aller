@@ -1,4 +1,4 @@
-package com.appscharles.libs.aller.getters;
+package com.appscharles.libs.aller.authorizations;
 
 import com.appscharles.libs.aller.exceptions.AllerException;
 
@@ -11,7 +11,7 @@ import com.appscharles.libs.aller.exceptions.AllerException;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public interface IAuthorizeCodeGetter {
+public interface ICodeAuthorization {
 
-    String get() throws AllerException;
+    String getCode() throws AllerException;
 }

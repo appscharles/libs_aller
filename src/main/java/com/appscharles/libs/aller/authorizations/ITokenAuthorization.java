@@ -1,4 +1,4 @@
-package com.appscharles.libs.aller.getters;
+package com.appscharles.libs.aller.authorizations;
 
 import com.appscharles.libs.aller.accesses.TokenAccess;
 import com.appscharles.libs.aller.exceptions.AllerException;
@@ -12,7 +12,7 @@ import com.appscharles.libs.aller.exceptions.AllerException;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public interface ITokenGetter {
+public interface ITokenAuthorization {
 
-    TokenAccess get() throws AllerException;
+    TokenAccess getTokenAccess() throws AllerException;
 }

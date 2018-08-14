@@ -1,5 +1,6 @@
 package com.appscharles.libs.aller.listeners;
 
+import com.appscharles.libs.aller.TestCase;
 import com.appscharles.libs.aller.exceptions.AllerException;
 import com.appscharles.libs.aller.senders.UrlRequestHttpSender;
 import org.junit.Assert;
@@ -18,12 +19,12 @@ import java.util.concurrent.Executors;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public class AuthorizationCodeListenerTest {
+public class AuthorizationCodeListenerTest extends TestCase {
 
     @Test
     public void shouldGetAuthorizationCode() throws AllerException {
         Integer port = 4231;
-        AuthorizationCodeListener listener = new AuthorizationCodeListener(port, 60000);
+        AuthorizationCodeListener listener = new AuthorizationCodeListener(port, 60000, "OK", "FAILED");
         Executors.newSingleThreadExecutor().submit(()->{
             try {
                 Thread.sleep(2000);

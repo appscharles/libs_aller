@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * The type Authorization code listener.
  */
-public class AuthorizationCodeListener extends NanoHTTPD {
+public class AuthorizationCodeListener extends NanoHTTPD implements IAuthorizationCodeListener{
 
     private long listenerTimeout;
 
@@ -28,10 +28,10 @@ public class AuthorizationCodeListener extends NanoHTTPD {
      * @param port            the port
      * @param listenerTimeout the listener timeout
      */
-    public AuthorizationCodeListener(Integer port, long listenerTimeout) {
+    public AuthorizationCodeListener(Integer port, long listenerTimeout, String htmlSuccessResponse, String htmlFailedResponse) {
         super(port);
-        this.htmlSuccessResponse = "OK";
-        this.htmlFailedResponse = "FAILED";
+        this.htmlSuccessResponse = htmlSuccessResponse;
+        this.htmlFailedResponse = htmlFailedResponse;
         this.listenerTimeout = listenerTimeout;
     }
 
@@ -51,11 +51,12 @@ public class AuthorizationCodeListener extends NanoHTTPD {
                     stop();
                     throw new AllerException("Interrupted listener for authorization code.");
                 }
+                Thread.sleep(100);
                 if (this.code != null){
                     stop();
+                    Thread.sleep(1000);
                     return code;
                 }
-                Thread.sleep(100);
             }
             stop();
             throw new AllerException("Timeout listener for authorization code.");
@@ -78,24 +79,6 @@ public class AuthorizationCodeListener extends NanoHTTPD {
             return newFixedLengthResponse(Response.Status.BAD_REQUEST, NanoHTTPD.MIME_HTML, this.htmlFailedResponse);
         }
 
-    }
-
-    /**
-     * Sets html success response.
-     *
-     * @param html the html
-     */
-    public void setHtmlSuccessResponse(String html) {
-        this.htmlSuccessResponse = html;
-    }
-
-    /**
-     * Sets html failed response.
-     *
-     * @param html the html
-     */
-    public void setHtmlFailedResponse(String html) {
-        this.htmlFailedResponse = html;
     }
 
     public void interrupt() {
