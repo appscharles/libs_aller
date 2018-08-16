@@ -9,7 +9,7 @@ package com.appscharles.libs.aller.senders;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public interface IUrlEncodable {
+public interface IEncodable {
 
-    <T extends AbstractPostHttpSender>  T setUrlEncode(String urlEncode);
+    <T>  T setEncoding(String encoding);
 }

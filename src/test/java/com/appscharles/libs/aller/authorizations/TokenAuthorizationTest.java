@@ -31,8 +31,21 @@ public class TokenAuthorizationTest extends TestCase {
 
     @Test
     public void shouldGetToken() throws AllerException, MalformedURLException {
+
+        TokenAccess access = getTokenAccess();
+        Assert.assertNotNull(access.getExpiresIn());
+        Assert.assertNotNull(access.getJti());
+        Assert.assertNotNull(access.getRefreshToken());
+        Assert.assertNotNull(access.getScope());
+        Assert.assertNotNull(access.getToken());
+        Assert.assertNotNull(access.getType());
+
+
+    }
+
+    public static TokenAccess getTokenAccess() throws AllerException, MalformedURLException {
         PlatformImpl.setImplicitExit(false);
-        ApiKeyAccess apiKeyAccess = ApiKeyAccessBuilder.create(new File(System.getProperty("user.home"), "appscharles/libs/aller/properties.properties")).build();
+        ApiKeyAccess apiKeyAccess = getApiKeyAccess();
         Integer port = AvailablePortGetter.get(11001);
         ResourceContentGetter resourceContentGetter = new ResourceContentGetter();
         IAuthorizationCodeListener authorizationCodeListener = new AuthorizationCodeListener(port, 60000, resourceContentGetter.get("com/appscharles/libs/aller/listeners/HtmlSuccessResponse.html"), "FAILED");
@@ -42,16 +55,10 @@ public class TokenAuthorizationTest extends TestCase {
 
         TokenAuthorization tokenGetter = new TokenAuthorization(apiKeyAccess.getClientId(), apiKeyAccess.getClientSecret(), port, authorizeCodeGetter);
         tokenGetter.setAuthorizationEndPoint(new URL("https://allegro.pl.allegrosandbox.pl/auth/oauth/"));
-        TokenAccess access = tokenGetter.getTokenAccess();
+        return tokenGetter.getTokenAccess();
+    }
 
-        Assert.assertNotNull(access.getExpiresIn());
-        Assert.assertNotNull(access.getJti());
-        Assert.assertNotNull(access.getRefreshToken());
-        Assert.assertNotNull(access.getScope());
-        Assert.assertNotNull(access.getToken());
-        Assert.assertNotNull(access.getType());
-
-
-
+    public static ApiKeyAccess getApiKeyAccess() throws AllerException {
+        return ApiKeyAccessBuilder.create(new File(System.getProperty("user.home"), "appscharles/libs/aller/properties.properties")).build();
     }
 }

@@ -9,7 +9,7 @@ package com.appscharles.libs.aller.senders;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public interface IRequestPropertable {
+public interface IGetDatable {
 
-    <T>  T addRequestProperty(String key, String value);
+    <T>  T addGetData(String key, String value);
 }

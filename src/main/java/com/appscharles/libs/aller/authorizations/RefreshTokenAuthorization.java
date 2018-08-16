@@ -19,9 +19,9 @@ import java.util.Calendar;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public class TokenAuthorization implements ITokenAuthorization {
+public class RefreshTokenAuthorization implements ITokenAuthorization {
 
-    private final static String DEFAULT_AUTHORIZATION_END_POINT = "https://allegro.pl/auth/oauth/";
+    private final static String DEFAULT_AUTHORIZATION_END_POINT = "https://allegro.pl/auth/oauth";
 
     private String clientId;
 
@@ -29,25 +29,25 @@ public class TokenAuthorization implements ITokenAuthorization {
 
     private Integer port;
 
-    private ICodeAuthorization authorizeCodeGetter;
+    private String refreshToken;
 
     private URL authorizationEndPoint;
 
-    public TokenAuthorization(String clientId, String clientSecret, Integer port, ICodeAuthorization authorizeCodeGetter) {
+    public RefreshTokenAuthorization(String clientId, String clientSecret, Integer port, String refreshToken) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.port = port;
-        this.authorizeCodeGetter = authorizeCodeGetter;
+        this.refreshToken = refreshToken;
     }
 
     @Override
     public TokenAccess getTokenAccess() throws AllerException {
         try {
             this.authorizationEndPoint = (this.authorizationEndPoint == null) ? new URL(DEFAULT_AUTHORIZATION_END_POINT) : this.authorizationEndPoint;
-            String code = this.authorizeCodeGetter.getCode();
-            URL allegroTokenUrl = new URL(String.format(this.authorizationEndPoint + "token?grant_type=authorization_code&code=%1$s&redirect_uri=%2$s", code, "http://localhost:" + this.port));
+
+            URL allegroRefreshTokenUrl = new URL(String.format(this.authorizationEndPoint + "/token?grant_type=refresh_token&refresh_token=%1$s&redirect_uri=%2$s", this.refreshToken, "http://localhost:" + this.port));
             String authorizationBase64 = Base64.getEncoder().encodeToString(new String(this.clientId + ":" + this.clientSecret).getBytes());
-            PostHttpSender sender = new PostHttpSender(allegroTokenUrl).addRequestProperty("Authorization", "Basic " + authorizationBase64);
+            PostHttpSender sender = new PostHttpSender(allegroRefreshTokenUrl).addRequestProperty("Authorization", "Basic " + authorizationBase64);
             sender.send();
             ObjectMapper mapper = new ObjectMapper();
             TokenAccess tokenAccess = mapper.readValue(sender.getContent(), TokenAccess.class);

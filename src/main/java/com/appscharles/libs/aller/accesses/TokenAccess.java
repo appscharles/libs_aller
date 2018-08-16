@@ -3,6 +3,8 @@ package com.appscharles.libs.aller.accesses;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
+import java.util.Calendar;
+
 /**
  * IDE Editor: IntelliJ IDEA
  * <p>
@@ -25,6 +27,8 @@ public class TokenAccess {
     private String scope;
 
     private String jti;
+
+    private Calendar createdAt;
 
     public TokenAccess() {
     }
@@ -156,5 +160,23 @@ public class TokenAccess {
     @JsonSetter("jti")
     public void setJti(String jti) {
         this.jti = jti;
+    }
+
+    /**
+     * Getter for property 'createdAt'.
+     *
+     * @return Value for property 'createdAt'.
+     */
+    public Calendar getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * Setter for property 'createdAt'.
+     *
+     * @param createdAt Value to set for property 'createdAt'.
+     */
+    public void setCreatedAt(Calendar createdAt) {
+        this.createdAt = createdAt;
     }
 }

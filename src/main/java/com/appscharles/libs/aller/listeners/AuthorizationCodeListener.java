@@ -44,7 +44,7 @@ public class AuthorizationCodeListener extends NanoHTTPD implements IAuthorizati
     public String waitAndGet() throws AllerException {
         this.interrupt = false;
         try {
-            start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
+            start(NanoHTTPD.SOCKET_READ_TIMEOUT, true);
             long timeout = System.currentTimeMillis() + this.listenerTimeout;
             while (System.currentTimeMillis() < timeout) {
                 if (this.interrupt){
@@ -54,7 +54,6 @@ public class AuthorizationCodeListener extends NanoHTTPD implements IAuthorizati
                 Thread.sleep(100);
                 if (this.code != null){
                     stop();
-                    Thread.sleep(1000);
                     return code;
                 }
             }

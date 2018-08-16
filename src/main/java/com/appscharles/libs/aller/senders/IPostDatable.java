@@ -11,5 +11,5 @@ package com.appscharles.libs.aller.senders;
  */
 public interface IPostDatable {
 
-    <T extends AbstractPostHttpSender>  T addPostData(String key, String value);
+    <T>  T addPostData(String key, String value);
 }
