@@ -1,14 +1,15 @@
 package com.appscharles.libs.aller.senders.rest;
 
+import com.appscharles.libs.aller.TestCase;
 import com.appscharles.libs.aller.accesses.TokenAccess;
 import com.appscharles.libs.aller.exceptions.AllerException;
+import com.sun.javafx.application.PlatformImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.appscharles.libs.aller.authorizations.TokenAuthorizationTest.getTokenAccess;
 
 /**
  * IDE Editor: IntelliJ IDEA
@@ -19,7 +20,7 @@ import static com.appscharles.libs.aller.authorizations.TokenAuthorizationTest.g
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public class RequestRestSenderTest {
+public class RequestRestSenderTest extends TestCase {
 
     @Test
     public void shouldGetResponse() throws MalformedURLException, AllerException {
@@ -32,6 +33,8 @@ public class RequestRestSenderTest {
 
     @Test
     public void shouldGetResponse2() throws MalformedURLException, AllerException {
+        PlatformImpl.startup(()->{});
+        PlatformImpl.setImplicitExit(false);
         TokenAccess access = getTokenAccess();
 
         RequestRestSender sender = new RequestRestSender("sale/delivery-methods", access.getToken());

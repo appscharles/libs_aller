@@ -1,16 +1,16 @@
 package com.appscharles.libs.aller.authorizations;
 
+import com.appscharles.libs.aller.TestCase;
 import com.appscharles.libs.aller.accesses.ApiKeyAccess;
 import com.appscharles.libs.aller.accesses.TokenAccess;
 import com.appscharles.libs.aller.exceptions.AllerException;
+import com.sun.javafx.application.PlatformImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.appscharles.libs.aller.authorizations.TokenAuthorizationTest.getApiKeyAccess;
-import static com.appscharles.libs.aller.authorizations.TokenAuthorizationTest.getTokenAccess;
 
 /**
  * IDE Editor: IntelliJ IDEA
@@ -21,10 +21,12 @@ import static com.appscharles.libs.aller.authorizations.TokenAuthorizationTest.g
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public class RefreshTokenAuthorizationTest {
+public class RefreshTokenAuthorizationTest extends TestCase {
 
     @Test
     public void shouldGetRefreshToken() throws MalformedURLException, AllerException {
+        PlatformImpl.startup(()->{});
+        PlatformImpl.setImplicitExit(false);
         TokenAccess tokenAccess = getTokenAccess();
         ApiKeyAccess apiKeyAccess = getApiKeyAccess();
         RefreshTokenAuthorization refreshTokenAuthorization = new RefreshTokenAuthorization(apiKeyAccess.getClientId(), apiKeyAccess.getClientSecret(), 11001, tokenAccess.getRefreshToken());

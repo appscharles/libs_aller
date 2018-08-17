@@ -2,63 +2,54 @@ package com.appscharles.libs.aller.listeners;
 
 import com.appscharles.libs.aller.exceptions.AllerException;
 import fi.iki.elonen.NanoHTTPD;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 /**
- * The type Authorization code listener.
+ * The type Browser authorization code listener.
  */
-public class AuthorizationCodeListener extends NanoHTTPD implements IAuthorizationCodeListener{
-
-    private long listenerTimeout;
+public class BrowserAuthorizationCodeListener extends NanoHTTPD implements IAuthorizationCodeListener{
 
     private String code;
 
     private String htmlSuccessResponse;
 
-    private String htmlFailedResponse;
-
     private Boolean interrupt;
 
-    /**
-     * Instantiates a new Authorization code listener.
-     *
-     * @param port            the port
-     * @param listenerTimeout the listener timeout
-     */
-    public AuthorizationCodeListener(Integer port, long listenerTimeout, String htmlSuccessResponse, String htmlFailedResponse) {
-        super(port);
-        this.htmlSuccessResponse = htmlSuccessResponse;
-        this.htmlFailedResponse = htmlFailedResponse;
-        this.listenerTimeout = listenerTimeout;
-    }
+    private ObjectProperty<AllerException> exception;
 
     /**
-     * Wait and get string.
+     * Instantiates a new Browser authorization code listener.
      *
-     * @return the string
-     * @throws AllerException the aller exception
+     * @param port                the port
+     * @param htmlSuccessResponse the html success response
      */
+    public BrowserAuthorizationCodeListener(Integer port, String htmlSuccessResponse) {
+        super(port);
+        this.htmlSuccessResponse = htmlSuccessResponse;
+        this.exception = new SimpleObjectProperty<>();
+    }
+
     public String waitAndGet() throws AllerException {
         this.interrupt = false;
         try {
             start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
-            long timeout = System.currentTimeMillis() + this.listenerTimeout;
-            while (System.currentTimeMillis() < timeout) {
-                if (this.interrupt){
-                    stop();
-                    throw new AllerException("Interrupted listener for authorization code.");
-                }
+            while (this.interrupt == false) {
                 Thread.sleep(100);
+                if (this.exception.getValue() != null){
+                    throw this.exception.getValue();
+                }
                 if (this.code != null){
                     stop();
                     return code;
                 }
             }
             stop();
-            throw new AllerException("Timeout listener for authorization code.");
+            throw new AllerException("Interrupted listener for authorization code.");
         } catch (IOException | InterruptedException e) {
             stop();
             throw new AllerException(e);
@@ -75,7 +66,8 @@ public class AuthorizationCodeListener extends NanoHTTPD implements IAuthorizati
             this.code = values.get(0);
             return newFixedLengthResponse(Response.Status.OK, NanoHTTPD.MIME_HTML, this.htmlSuccessResponse);
         } else {
-            return newFixedLengthResponse(Response.Status.BAD_REQUEST, NanoHTTPD.MIME_HTML, this.htmlFailedResponse);
+            this.exception.setValue(new AllerException("Response not contains 'code' parameter."));
+            return newFixedLengthResponse(Response.Status.BAD_REQUEST, NanoHTTPD.MIME_HTML, "Response not contains 'code' parameter.");
         }
 
     }
