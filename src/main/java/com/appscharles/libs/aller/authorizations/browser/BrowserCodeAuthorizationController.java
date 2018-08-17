@@ -9,8 +9,10 @@ import com.sun.javafx.application.PlatformImpl;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.WindowEvent;
@@ -49,6 +51,9 @@ public class BrowserCodeAuthorizationController extends AbstractControllerFX {
     @FXML
     public Label login;
 
+    @FXML
+    public ProgressBar progressBar;
+
     private AsyncOpenBrowserService asyncOpenBrowserService;
 
     private ListenerCodeService listenerCodeService;
@@ -78,6 +83,14 @@ public class BrowserCodeAuthorizationController extends AbstractControllerFX {
         this.listenerCodeService = new ListenerCodeService(this.configuration);
         this.fXStage.setOnHidden(event->{
             this.listenerCodeService.interrupt();
+        });
+        this.progressBar.progressProperty().bind(this.webEngine.getLoadWorker().progressProperty());
+        this.webEngine.getLoadWorker().stateProperty().addListener((args, oldVal, newVal) ->{
+            if (newVal == Worker.State.SUCCEEDED){
+                this.progressBar.setVisible(false);
+            } else if (newVal == Worker.State.RUNNING){
+                this.progressBar.setVisible(true);
+            }
         });
     }
 
