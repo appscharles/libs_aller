@@ -31,13 +31,16 @@ public class RefreshTokenAuthorization implements ITokenAuthorization {
 
     private String refreshToken;
 
+    private Calendar refreshTokenCreatedAt;
+
     private URL authorizationEndPoint;
 
-    public RefreshTokenAuthorization(String clientId, String clientSecret, Integer port, String refreshToken) {
+    public RefreshTokenAuthorization(String clientId, String clientSecret, Integer port, String refreshToken, Calendar refreshTokenCreatedAt) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.port = port;
         this.refreshToken = refreshToken;
+        this.refreshTokenCreatedAt = refreshTokenCreatedAt;
     }
 
     @Override
@@ -52,6 +55,7 @@ public class RefreshTokenAuthorization implements ITokenAuthorization {
             ObjectMapper mapper = new ObjectMapper();
             TokenAccess tokenAccess = mapper.readValue(sender.getContent(), TokenAccess.class);
             tokenAccess.setCreatedAt(Calendar.getInstance());
+            tokenAccess.setRefreshTokenCreatedAt(this.refreshTokenCreatedAt);
             return tokenAccess;
         }
         catch (IOException e) {

@@ -29,7 +29,7 @@ public class RefreshTokenAuthorizationTest extends TestCase {
         PlatformImpl.setImplicitExit(false);
         TokenAccess tokenAccess = getTokenAccess();
         ApiKeyAccess apiKeyAccess = getApiKeyAccess();
-        RefreshTokenAuthorization refreshTokenAuthorization = new RefreshTokenAuthorization(apiKeyAccess.getClientId(), apiKeyAccess.getClientSecret(), 11001, tokenAccess.getRefreshToken());
+        RefreshTokenAuthorization refreshTokenAuthorization = new RefreshTokenAuthorization(apiKeyAccess.getClientId(), apiKeyAccess.getClientSecret(), 11001, tokenAccess.getRefreshToken(), tokenAccess.getRefreshTokenCreatedAt());
         refreshTokenAuthorization.setAuthorizationEndPoint(new URL("https://allegro.pl.allegrosandbox.pl/auth/oauth"));
         TokenAccess refreshTokenAccess = refreshTokenAuthorization.getTokenAccess();
         Assert.assertNotNull(refreshTokenAccess.getExpiresIn());

@@ -33,6 +33,7 @@ public class RequestRestSender extends AbstractRestSender {
             URL callMethodUrl = (this.callMethodUrl == null) ? new URL(DEFAULT_CALL_METHOD_URL) : this.callMethodUrl;
             URL url = new URL(callMethodUrl + "/" + this.resource);
             GetHttpSender sender = new GetHttpSender(url);
+            sender.addRequestProperty("Accept-Language", "pl-PL");
             sender.addRequestProperty("Authorization", "Bearer " + this.token);
             String apiVersion = (this.apiVersion == null)? DEFAULT_API_VERSION : this.apiVersion;
             sender.addRequestProperty("Accept", "application/vnd.allegro." + apiVersion +"+json");

@@ -32,6 +32,8 @@ public class TokenAccess {
 
     private Calendar createdAt;
 
+    private Calendar refreshTokenCreatedAt;
+
     public TokenAccess() {
     }
 
@@ -192,5 +194,23 @@ public class TokenAccess {
      */
     public void setCreatedAt(Calendar createdAt) {
         this.createdAt = createdAt;
+    }
+
+    /**
+     * Getter for property 'refreshTokenCreatedAt'.
+     *
+     * @return Value for property 'refreshTokenCreatedAt'.
+     */
+    public Calendar getRefreshTokenCreatedAt() {
+        return refreshTokenCreatedAt;
+    }
+
+    /**
+     * Setter for property 'refreshTokenCreatedAt'.
+     *
+     * @param refreshTokenCreatedAt Value to set for property 'refreshTokenCreatedAt'.
+     */
+    public void setRefreshTokenCreatedAt(Calendar refreshTokenCreatedAt) {
+        this.refreshTokenCreatedAt = refreshTokenCreatedAt;
     }
 }

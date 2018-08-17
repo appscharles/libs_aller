@@ -52,6 +52,7 @@ public class TokenAuthorization implements ITokenAuthorization {
             ObjectMapper mapper = new ObjectMapper();
             TokenAccess tokenAccess = mapper.readValue(sender.getContent(), TokenAccess.class);
             tokenAccess.setCreatedAt(Calendar.getInstance());
+            tokenAccess.setRefreshTokenCreatedAt(Calendar.getInstance());
             return tokenAccess;
         }
         catch (IOException e) {

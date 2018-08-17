@@ -5,6 +5,7 @@ import com.appscharles.libs.aller.authorizations.RefreshTokenAuthorization;
 import com.appscharles.libs.aller.builders.NewTokenAccessBuilder;
 import com.appscharles.libs.aller.exceptions.AllerException;
 import com.appscharles.libs.aller.getters.AvailablePortGetter;
+import com.appscharles.libs.aller.validators.ExpireRefreshTokenValidator;
 import com.appscharles.libs.aller.validators.ExpireTokenValidator;
 import com.appscharles.libs.ioer.services.FileReader;
 import com.appscharles.libs.ioer.services.FileWriter;
@@ -38,7 +39,10 @@ public class TokenManager {
         for (Map.Entry<String, TokenAccess> entry : tokens.entrySet()) {
             if (entry.getValue().getLoginAllegro().equals(loginAllegro)) {
                 TokenAccess tokenAccess = entry.getValue();
-                if (ExpireTokenValidator.isValid(tokenAccess) == false) {
+                if (ExpireRefreshTokenValidator.isValid(tokens.get(loginAllegro)) == false){
+                    removeTokenAccess(loginAllegro);
+                    return newTokenAccess(loginAllegro);
+                } else if (ExpireTokenValidator.isValid(tokenAccess) == false) {
                     refreshTokenAccess(loginAllegro, 3);
                 }
                 return tokenAccess;
@@ -95,7 +99,7 @@ public class TokenManager {
         for (int i = 0; i < attempts; i++) {
             try {
                 Integer port = AvailablePortGetter.get( configuration.getRedirectPorts());
-                RefreshTokenAuthorization refreshTokenAuthorization = new RefreshTokenAuthorization(configuration.getClientId(), configuration.getClientSecret(), port, tokens.get(loginAllegro).getRefreshToken());
+                RefreshTokenAuthorization refreshTokenAuthorization = new RefreshTokenAuthorization(configuration.getClientId(), configuration.getClientSecret(), port, tokens.get(loginAllegro).getRefreshToken(), tokens.get(loginAllegro).getRefreshTokenCreatedAt());
                 refreshTokenAuthorization.setAuthorizationEndPoint(configuration.getAuthorizationEndPoint());
                 tokenAccess = refreshTokenAuthorization.getTokenAccess();
                 tokenAccess.setLoginAllegro(loginAllegro);
@@ -116,16 +120,16 @@ public class TokenManager {
     private static void initTokens() throws AllerException {
         if (tokens == null) {
             tokens = new HashMap<>();
-        }
-        if (configuration.getFileConfigurationsTokens().exists()){
-            ObjectMapper mapper = new ObjectMapper();
-            StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
-            textEncryptor.setPassword(configuration.getSaltPassword());
-            try {
-                String json = textEncryptor.decrypt(FileReader.read(configuration.getFileConfigurationsTokens()));
-                tokens = mapper.readValue(json, new TypeReference<Map<String, TokenAccess>>(){});
-            } catch (IOException e) {
-                throw new AllerException(e);
+            if (configuration.getFileConfigurationsTokens().exists()){
+                ObjectMapper mapper = new ObjectMapper();
+                StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+                textEncryptor.setPassword(configuration.getSaltPassword());
+                try {
+                    String json = textEncryptor.decrypt(FileReader.read(configuration.getFileConfigurationsTokens()));
+                    tokens = mapper.readValue(json, new TypeReference<Map<String, TokenAccess>>(){});
+                } catch (IOException e) {
+                    throw new AllerException(e);
+                }
             }
         }
     }
@@ -156,4 +160,5 @@ public class TokenManager {
     public static void setConfiguration(TokenManagerConfiguration configuration) {
         TokenManager.configuration = configuration;
     }
+
 }
