@@ -45,7 +45,7 @@ public class TokenAuthorization implements ITokenAuthorization {
         try {
             this.authorizationEndPoint = (this.authorizationEndPoint == null) ? new URL(DEFAULT_AUTHORIZATION_END_POINT) : this.authorizationEndPoint;
             String code = this.authorizeCodeGetter.getCode();
-            URL allegroTokenUrl = new URL(String.format(this.authorizationEndPoint + "token?grant_type=authorization_code&code=%1$s&redirect_uri=%2$s", code, "http://localhost:" + this.port));
+            URL allegroTokenUrl = new URL(String.format(this.authorizationEndPoint + "/token?grant_type=authorization_code&code=%1$s&redirect_uri=%2$s", code, "http://localhost:" + this.port));
             String authorizationBase64 = Base64.getEncoder().encodeToString(new String(this.clientId + ":" + this.clientSecret).getBytes());
             PostHttpSender sender = new PostHttpSender(allegroTokenUrl).addRequestProperty("Authorization", "Basic " + authorizationBase64);
             sender.send();

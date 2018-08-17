@@ -52,14 +52,18 @@ public class TestCase {
         IAuthorizationCodeListener authorizationCodeListener = new AuthorizationCodeListener(port, 60000, resourceContentGetter.get("com/appscharles/libs/aller/listeners/HtmlSuccessResponse.html"), "FAILED");
 
         UrlCodeAuthorization authorizeCodeGetter = new UrlCodeAuthorization(apiKeyAccess.getClientId(), port, authorizationCodeListener);
-        authorizeCodeGetter.setAuthorizationEndPoint(new URL("https://allegro.pl.allegrosandbox.pl/auth/oauth/"));
+        authorizeCodeGetter.setAuthorizationEndPoint(new URL("https://allegro.pl.allegrosandbox.pl/auth/oauth"));
 
         TokenAuthorization tokenGetter = new TokenAuthorization(apiKeyAccess.getClientId(), apiKeyAccess.getClientSecret(), port, authorizeCodeGetter);
-        tokenGetter.setAuthorizationEndPoint(new URL("https://allegro.pl.allegrosandbox.pl/auth/oauth/"));
+        tokenGetter.setAuthorizationEndPoint(new URL("https://allegro.pl.allegrosandbox.pl/auth/oauth"));
         return tokenGetter.getTokenAccess();
     }
 
     public ApiKeyAccess getApiKeyAccess() throws AllerException {
         return ApiKeyAccessBuilder.create(new File(System.getProperty("user.home"), "appscharles/libs/aller/properties.properties")).build();
+    }
+
+    public File getFileConfigurationTokens(){
+        return new File("E:\\others\\aller_test\\tokens.data");
     }
 }

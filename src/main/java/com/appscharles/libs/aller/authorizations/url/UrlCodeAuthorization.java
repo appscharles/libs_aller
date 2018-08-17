@@ -66,7 +66,7 @@ public class UrlCodeAuthorization implements ICodeAuthorization {
         } catch (MalformedURLException e) {
            throw new AllerException(e);
         }
-        String patternAllegroAuthorizeUrl = this.authorizationEndPoint + "authorize?response_type=code&client_id=%1$s&redirect_uri=%2$s";
+        String patternAllegroAuthorizeUrl = this.authorizationEndPoint + "/authorize?response_type=code&client_id=%1$s&redirect_uri=%2$s";
         String redirectUrl = "http://localhost:" + this.redirectPort;
         ObjectProperty<Alert> alert = new SimpleObjectProperty<>();
         ObjectProperty<Alert> alertError = new SimpleObjectProperty<>();

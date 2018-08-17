@@ -22,6 +22,7 @@ repositories {
 
 dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
+    compile group: 'com.appscharles.libs', name: 'proper', version: '1.0.0.0-dev1'
     compile group: 'com.appscharles.libs', name: 'weber', version: '1.0.0.0-dev3'
     compile group: 'com.appscharles.libs', name: 'logger', version: '1.0.0.0-dev20'
     compile group: 'com.appscharles.libs', name: 'fxer', version: '1.0.0.0-dev15'

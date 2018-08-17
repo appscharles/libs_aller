@@ -16,6 +16,8 @@ import java.util.Calendar;
  */
 public class TokenAccess {
 
+    private String loginAllegro;
+
     private String token;
 
     private String type;
@@ -33,13 +35,19 @@ public class TokenAccess {
     public TokenAccess() {
     }
 
-    public TokenAccess(String token, String type, String refreshToken, long expiresIn, String scope, String jti) {
+    public TokenAccess(String loginAllegro, String token, String type, String refreshToken, long expiresIn, String scope, String jti) {
+        this.loginAllegro = loginAllegro;
         this.token = token;
         this.type = type;
         this.refreshToken = refreshToken;
         this.expiresIn = expiresIn;
         this.scope = scope;
         this.jti = jti;
+    }
+
+    @JsonGetter("login_allegro")
+    public String getLoginAllegro() {
+        return loginAllegro;
     }
 
     /**
@@ -100,6 +108,12 @@ public class TokenAccess {
     @JsonGetter("jti")
     public String getJti() {
         return jti;
+    }
+
+
+    @JsonSetter("login_allegro")
+    public void setLoginAllegro(String loginAllegro) {
+        this.loginAllegro = loginAllegro;
     }
 
     /**
