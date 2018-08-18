@@ -1,6 +1,8 @@
 package com.appscharles.libs.aller.senders.rest;
 
 import com.appscharles.libs.aller.exceptions.AllerException;
+import com.appscharles.libs.aller.senders.IDatable;
+import com.appscharles.libs.aller.senders.IRequestPropertable;
 
 /**
  * IDE Editor: IntelliJ IDEA
@@ -11,7 +13,7 @@ import com.appscharles.libs.aller.exceptions.AllerException;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public interface IRestSender {
+public interface IRestSender extends IDatable, IRequestPropertable {
 
     String getResponse() throws AllerException;
 }

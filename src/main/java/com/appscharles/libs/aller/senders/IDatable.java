@@ -1,6 +1,6 @@
 package com.appscharles.libs.aller.senders;
 
-import com.appscharles.libs.aller.exceptions.AllerException;
+import java.util.Map;
 
 /**
  * IDE Editor: IntelliJ IDEA
@@ -11,7 +11,9 @@ import com.appscharles.libs.aller.exceptions.AllerException;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public interface IHttpSender {
+public interface IDatable {
 
-    void send() throws AllerException;
+    <T>  T addData(String key, String value);
+
+    <T>  T setData(Map<String, String> data);
 }

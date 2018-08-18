@@ -2,7 +2,7 @@ package com.appscharles.libs.aller.listeners;
 
 import com.appscharles.libs.aller.TestCase;
 import com.appscharles.libs.aller.exceptions.AllerException;
-import com.appscharles.libs.aller.senders.UrlRequestHttpSender;
+import com.appscharles.libs.aller.senders.GetHttpSender;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class AuthorizationCodeListenerTest extends TestCase {
         Executors.newSingleThreadExecutor().submit(()->{
             try {
                 Thread.sleep(2000);
-                new UrlRequestHttpSender(new URL("http://localhost:" + port + "/?code=code_test")).send();
+                new GetHttpSender(new URL("http://localhost:" + port + "/?code=code_test")).getResponse();
             } catch (InterruptedException | MalformedURLException | AllerException e) {
                 e.printStackTrace();
             }

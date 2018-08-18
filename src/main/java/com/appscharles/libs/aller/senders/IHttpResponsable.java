@@ -1,5 +1,7 @@
 package com.appscharles.libs.aller.senders;
 
+import com.appscharles.libs.aller.exceptions.AllerException;
+
 /**
  * IDE Editor: IntelliJ IDEA
  * <p>
@@ -9,7 +11,7 @@ package com.appscharles.libs.aller.senders;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public interface IGetDatable {
+public interface IHttpResponsable {
 
-    <T>  T addGetData(String key, String value);
+    String getResponse() throws AllerException;
 }

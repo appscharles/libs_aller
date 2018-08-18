@@ -25,9 +25,7 @@ public class RequestRestSenderTest extends TestCase {
     @Test
     public void shouldGetResponse() throws MalformedURLException, AllerException {
 
-        RequestRestSender sender = new RequestRestSender("categories/2", null);
-        sender.setApiVersion("public.v1");
-        sender.setCallMethodUrl(new URL("https://api.allegro.pl.allegrosandbox.pl"));
+        GetRequestRestSender sender = new GetRequestRestSender("categories/2", ApiVersion.PUBLIC_V1, null, new URL("https://api.allegro.pl.allegrosandbox.pl"));
         Assert.assertTrue(sender.getResponse().contains("id\":"));
     }
 
@@ -37,8 +35,7 @@ public class RequestRestSenderTest extends TestCase {
         PlatformImpl.setImplicitExit(false);
         TokenAccess access = getTokenAccess();
 
-        RequestRestSender sender = new RequestRestSender("sale/delivery-methods", access.getToken());
-        sender.setCallMethodUrl(new URL("https://api.allegro.pl.allegrosandbox.pl"));
+        GetRequestRestSender sender = new GetRequestRestSender("sale/delivery-methods", ApiVersion.BETA_V1, access.getToken(), new URL("https://api.allegro.pl.allegrosandbox.pl"));
         String response = sender.getResponse();
         System.out.println(response);
         Assert.assertTrue(response.contains("id\":"));

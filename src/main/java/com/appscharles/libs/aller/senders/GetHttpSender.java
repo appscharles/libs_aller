@@ -12,9 +12,7 @@ import java.util.Map;
 /**
  * The type Post http sender.
  */
-public class GetHttpSender extends AbstractGetHttpSender {
-
-    private String content;
+public class GetHttpSender extends AbstractHttpSender {
 
     /**
      * Instantiates a new Post http sender.
@@ -26,26 +24,39 @@ public class GetHttpSender extends AbstractGetHttpSender {
     }
 
     @Override
-    public void send() throws AllerException {
+    public String getResponse() throws AllerException {
         HttpURLConnection connection = null;
+        StringBuilder content;
         try {
-            this.url = new URL(this.url + getDataFromParameters());
+            this.url = new URL(this.url +((this.getUrlParameters().isEmpty())? "" : "/?" + getUrlParameters()));
             connection = (HttpURLConnection) this.url.openConnection();
             connection.setRequestMethod("GET");
             for (Map.Entry<String, String> entry : this.requestProperties.entrySet()) {
                 connection.setRequestProperty(entry.getKey(), entry.getValue());
             }
-            StringBuilder content;
-            try (BufferedReader in = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream()))) {
-                String line;
-                content = new StringBuilder();
-                while ((line = in.readLine()) != null) {
-                    content.append(line);
-                    content.append(System.lineSeparator());
+            if (connection.getResponseCode() >= 200 && connection.getResponseCode() <  400) {
+                try (BufferedReader in = new BufferedReader(
+                        new InputStreamReader(connection.getInputStream()))) {
+                    String line;
+                    content = new StringBuilder();
+                    while ((line = in.readLine()) != null) {
+                        content.append(line);
+                        content.append(System.lineSeparator());
+                    }
                 }
+            } else {
+                try (BufferedReader in = new BufferedReader(
+                        new InputStreamReader(connection.getErrorStream()))) {
+                    String line;
+                    content = new StringBuilder();
+                    while ((line = in.readLine()) != null) {
+                        content.append(line);
+                        content.append(System.lineSeparator());
+                    }
+                }
+                throw new AllerException(connection.getResponseCode() + " " + connection.getResponseMessage() + " " + content.toString());
             }
-            this.content = content.toString();
+
         } catch (IOException e) {
             throw new AllerException(e);
         } finally {
@@ -53,14 +64,6 @@ public class GetHttpSender extends AbstractGetHttpSender {
                 connection.disconnect();
             }
         }
-    }
-
-    /**
-     * Gets content.
-     *
-     * @return the content
-     */
-    public String getContent() {
-        return content;
+        return content.toString();
     }
 }

@@ -13,36 +13,44 @@ import java.util.Map;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public abstract class AbstractRestSender implements IRestSender, ICallMethodUrlable, IApiVersionable, IResourceParametable {
+public abstract class AbstractRestSender implements IRestSender {
 
-    protected Map<String, String> resourceParameters;
+    protected Map<String, String> data;
 
-    protected URL callMethodUrl;
+    protected Map<String, String> requestProperties;
+
+    protected URL urlCallMethod ;
 
     protected String resource;
 
     protected String token;
 
-    protected String apiVersion;
+    protected ApiVersion apiVersion;
 
-    public AbstractRestSender(String resource, String token) {
+    public AbstractRestSender(String resource, ApiVersion apiVersion, String token, URL urlCallMethod) {
         this.resource = resource;
-        this.token = token;
-        this.resourceParameters = new HashMap<>();
-    }
-
-    @Override
-    public void setCallMethodUrl(URL callMethodUrl) {
-        this.callMethodUrl = callMethodUrl;
-    }
-
-    @Override
-    public void setApiVersion(String apiVersion) {
         this.apiVersion = apiVersion;
+        this.token = token;
+        this.urlCallMethod = urlCallMethod;
+        this.data = new HashMap<>();
+        this.requestProperties =  new HashMap<>();
     }
 
     @Override
-    public void addResourceParameter(String key, String value) {
-        this.resourceParameters.put(key, value);
+    public <T> T addData(String key, String value) {
+        this.data.put(key, value);
+        return (T)this;
+    }
+
+    @Override
+    public <T> T setData(Map<String, String> data) {
+        this.data = data;
+        return (T)this;
+    }
+
+    @Override
+    public <T> T addRequestProperty(String key, String value) {
+        this.requestProperties.put(key, value);
+        return (T) this;
     }
 }

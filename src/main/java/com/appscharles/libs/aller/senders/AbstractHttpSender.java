@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * The type Abstract post http sender.
  */
-public abstract class AbstractGetHttpSender implements IHttpSender, IEncodable, IGetDatable, IRequestPropertable {
+public abstract class AbstractHttpSender implements IHttpResponsable, IEncodable, IDatable, IRequestPropertable {
 
     /**
      * The Url encode.
@@ -26,7 +26,7 @@ public abstract class AbstractGetHttpSender implements IHttpSender, IEncodable, 
     /**
      * The Post data.
      */
-    protected Map<String, String> getData;
+    protected Map<String, String> data;
 
     /**
      * The Request properties.
@@ -39,10 +39,10 @@ public abstract class AbstractGetHttpSender implements IHttpSender, IEncodable, 
      *
      * @param url the url
      */
-    public AbstractGetHttpSender(URL url) {
+    public AbstractHttpSender(URL url) {
         this.encoding = "UTF-8";
         this.url = url;
-        this.getData = new HashMap<>();
+        this.data = new HashMap<>();
         this.requestProperties = new HashMap<>();
     }
 
@@ -52,10 +52,10 @@ public abstract class AbstractGetHttpSender implements IHttpSender, IEncodable, 
      * @return the byte [ ]
      * @throws AllerException the aller exception
      */
-    protected String getDataFromParameters() throws AllerException {
+    protected String getUrlParameters() throws AllerException {
         try {
             String urlParameters = "";
-            Iterator it = this.getData.entrySet().iterator();
+            Iterator it = this.data.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
                 String key = pair.getKey();
@@ -65,7 +65,6 @@ public abstract class AbstractGetHttpSender implements IHttpSender, IEncodable, 
                     urlParameters += "&";
                 }
             }
-            urlParameters = (urlParameters.isEmpty()) ? urlParameters : "?" + urlParameters;
             return urlParameters;
         } catch (UnsupportedEncodingException e) {
             throw new AllerException(e);
@@ -78,9 +77,15 @@ public abstract class AbstractGetHttpSender implements IHttpSender, IEncodable, 
         return (T) this;
     }
 
+    @Override
+    public <T> T addData(String key, String value) {
+        this.data.put(key, value);
+        return (T)this;
+    }
 
-    public <T> T addGetData(String key, String value) {
-        this.getData.put(key, value);
+    @Override
+    public <T> T setData(Map<String, String> data) {
+        this.data = data;
         return (T)this;
     }
 

@@ -3,7 +3,8 @@ package com.appscharles.libs.aller.managers;
 import com.appscharles.libs.aller.TestCase;
 import com.appscharles.libs.aller.accesses.TokenAccess;
 import com.appscharles.libs.aller.exceptions.AllerException;
-import com.appscharles.libs.aller.senders.rest.RequestRestSender;
+import com.appscharles.libs.aller.senders.rest.ApiVersion;
+import com.appscharles.libs.aller.senders.rest.GetRequestRestSender;
 import com.sun.javafx.application.PlatformImpl;
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,8 +37,7 @@ public class TokenManagerTest extends TestCase {
         TokenManager.setConfiguration(configuration);
         TokenAccess tokenAccess = TokenManager.getTokenAccess(getProperties().getProperty("libs_aller.test.login_allegro"));
 
-        RequestRestSender sender = new RequestRestSender("sale/delivery-methods", tokenAccess.getToken());
-        sender.setCallMethodUrl(new URL("https://api.allegro.pl.allegrosandbox.pl"));
+        GetRequestRestSender sender = new GetRequestRestSender("sale/delivery-methods", ApiVersion.BETA_V1, tokenAccess.getToken(), new URL("https://api.allegro.pl.allegrosandbox.pl"));
         Assert.assertTrue(sender.getResponse().contains("id\":"));
     }
 
@@ -53,11 +53,9 @@ public class TokenManagerTest extends TestCase {
         TokenManager.setConfiguration(configuration);
         TokenAccess tokenAccess = TokenManager.getTokenAccess(getProperties().getProperty("libs_aller.test.login_allegro"));
         TokenAccess tokenAccess2 = TokenManager.refreshTokenAccess(getProperties().getProperty("libs_aller.test.login_allegro"), 3);
-        RequestRestSender sender = new RequestRestSender("sale/delivery-methods", tokenAccess.getToken());
-        sender.setCallMethodUrl(new URL("https://api.allegro.pl.allegrosandbox.pl"));
+        GetRequestRestSender sender = new GetRequestRestSender("sale/delivery-methods", ApiVersion.BETA_V1, tokenAccess.getToken(), new URL("https://api.allegro.pl.allegrosandbox.pl"));
         Assert.assertTrue(sender.getResponse().contains("id\":"));
-        RequestRestSender sender2 = new RequestRestSender("sale/delivery-methods", tokenAccess2.getToken());
-        sender2.setCallMethodUrl(new URL("https://api.allegro.pl.allegrosandbox.pl"));
+        GetRequestRestSender sender2 = new GetRequestRestSender("sale/delivery-methods", ApiVersion.BETA_V1, tokenAccess2.getToken(), new URL("https://api.allegro.pl.allegrosandbox.pl"));
         Assert.assertTrue(sender2.getResponse().contains("id\":"));
     }
 
@@ -73,8 +71,7 @@ public class TokenManagerTest extends TestCase {
         TokenManager.setConfiguration(configuration);
         TokenAccess tokenAccess = TokenManager.getTokenAccess(getProperties().getProperty("libs_aller.test.login_allegro"));
 
-        RequestRestSender sender = new RequestRestSender("sale/delivery-methods", tokenAccess.getToken());
-        sender.setCallMethodUrl(new URL("https://api.allegro.pl.allegrosandbox.pl"));
+        GetRequestRestSender sender = new GetRequestRestSender("sale/delivery-methods", ApiVersion.BETA_V1, tokenAccess.getToken(), new URL("https://api.allegro.pl.allegrosandbox.pl"));
         Assert.assertTrue(sender.getResponse().contains("id\":"));
 
         Calendar refreshTokenCreatedAt = Calendar.getInstance();

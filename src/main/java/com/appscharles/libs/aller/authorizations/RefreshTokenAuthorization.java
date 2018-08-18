@@ -48,12 +48,14 @@ public class RefreshTokenAuthorization implements ITokenAuthorization {
         try {
             this.authorizationEndPoint = (this.authorizationEndPoint == null) ? new URL(DEFAULT_AUTHORIZATION_END_POINT) : this.authorizationEndPoint;
 
-            URL allegroRefreshTokenUrl = new URL(String.format(this.authorizationEndPoint + "/token?grant_type=refresh_token&refresh_token=%1$s&redirect_uri=%2$s", this.refreshToken, "http://localhost:" + this.port));
+            URL allegroRefreshTokenUrl = new URL(String.format(this.authorizationEndPoint + "/token"));
             String authorizationBase64 = Base64.getEncoder().encodeToString(new String(this.clientId + ":" + this.clientSecret).getBytes());
             PostHttpSender sender = new PostHttpSender(allegroRefreshTokenUrl).addRequestProperty("Authorization", "Basic " + authorizationBase64);
-            sender.send();
+            sender.addData("grant_type", "refresh_token");
+            sender.addData("refresh_token",this.refreshToken);
+            sender.addData("redirect_uri", "http://localhost:" + this.port);
             ObjectMapper mapper = new ObjectMapper();
-            TokenAccess tokenAccess = mapper.readValue(sender.getContent(), TokenAccess.class);
+            TokenAccess tokenAccess = mapper.readValue(sender.getResponse(), TokenAccess.class);
             tokenAccess.setCreatedAt(Calendar.getInstance());
             tokenAccess.setRefreshTokenCreatedAt(this.refreshTokenCreatedAt);
             return tokenAccess;

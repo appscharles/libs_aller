@@ -45,12 +45,14 @@ public class TokenAuthorization implements ITokenAuthorization {
         try {
             this.authorizationEndPoint = (this.authorizationEndPoint == null) ? new URL(DEFAULT_AUTHORIZATION_END_POINT) : this.authorizationEndPoint;
             String code = this.authorizeCodeGetter.getCode();
-            URL allegroTokenUrl = new URL(String.format(this.authorizationEndPoint + "/token?grant_type=authorization_code&code=%1$s&redirect_uri=%2$s", code, "http://localhost:" + this.port));
+            URL allegroTokenUrl = new URL(String.format(this.authorizationEndPoint + "/token"));
             String authorizationBase64 = Base64.getEncoder().encodeToString(new String(this.clientId + ":" + this.clientSecret).getBytes());
             PostHttpSender sender = new PostHttpSender(allegroTokenUrl).addRequestProperty("Authorization", "Basic " + authorizationBase64);
-            sender.send();
+            sender.addData("grant_type", "authorization_code");
+            sender.addData("code",code);
+            sender.addData("redirect_uri", "http://localhost:" + this.port);
             ObjectMapper mapper = new ObjectMapper();
-            TokenAccess tokenAccess = mapper.readValue(sender.getContent(), TokenAccess.class);
+            TokenAccess tokenAccess = mapper.readValue(sender.getResponse(), TokenAccess.class);
             tokenAccess.setCreatedAt(Calendar.getInstance());
             tokenAccess.setRefreshTokenCreatedAt(Calendar.getInstance());
             return tokenAccess;
