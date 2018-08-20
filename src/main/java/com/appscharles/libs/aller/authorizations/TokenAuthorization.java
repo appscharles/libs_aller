@@ -11,13 +11,7 @@ import java.util.Base64;
 import java.util.Calendar;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 13.08.2018
- * Time: 15:15
- * Project name: aller
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The type Token authorization.
  */
 public class TokenAuthorization implements ITokenAuthorization {
 
@@ -33,6 +27,14 @@ public class TokenAuthorization implements ITokenAuthorization {
 
     private URL authorizationEndPoint;
 
+    /**
+     * Instantiates a new Token authorization.
+     *
+     * @param clientId            the client id
+     * @param clientSecret        the client secret
+     * @param port                the port
+     * @param authorizeCodeGetter the authorize code getter
+     */
     public TokenAuthorization(String clientId, String clientSecret, Integer port, ICodeAuthorization authorizeCodeGetter) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
@@ -45,12 +47,10 @@ public class TokenAuthorization implements ITokenAuthorization {
         try {
             this.authorizationEndPoint = (this.authorizationEndPoint == null) ? new URL(DEFAULT_AUTHORIZATION_END_POINT) : this.authorizationEndPoint;
             String code = this.authorizeCodeGetter.getCode();
-            URL allegroTokenUrl = new URL(String.format(this.authorizationEndPoint + "/token"));
+            URL allegroTokenUrl = new URL(this.authorizationEndPoint + "/token");
             String authorizationBase64 = Base64.getEncoder().encodeToString(new String(this.clientId + ":" + this.clientSecret).getBytes());
             PostHttpSender sender = new PostHttpSender(allegroTokenUrl).addRequestProperty("Authorization", "Basic " + authorizationBase64);
-            sender.addData("grant_type", "authorization_code");
-            sender.addData("code",code);
-            sender.addData("redirect_uri", "http://localhost:" + this.port);
+sender.setData(String.format("grant_type=authorization_code&code=%1$s&redirect_uri=%2$s", code, "http://localhost:" + this.port));
             ObjectMapper mapper = new ObjectMapper();
             TokenAccess tokenAccess = mapper.readValue(sender.getResponse(), TokenAccess.class);
             tokenAccess.setCreatedAt(Calendar.getInstance());
@@ -63,9 +63,9 @@ public class TokenAuthorization implements ITokenAuthorization {
     }
 
     /**
-     * Setter for property 'authorizationEndPoint'.
+     * Sets authorization end point.
      *
-     * @param authorizationEndPoint Value to set for property 'authorizationEndPoint'.
+     * @param authorizationEndPoint the authorization end point
      */
     public void setAuthorizationEndPoint(URL authorizationEndPoint) {
         this.authorizationEndPoint = authorizationEndPoint;

@@ -4,15 +4,15 @@ import com.appscharles.libs.aller.accesses.TokenAccess;
 import com.appscharles.libs.aller.exceptions.AllerException;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 13.08.2018
- * Time: 12:29
- * Project name: aller
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The interface Token authorization.
  */
 public interface ITokenAuthorization {
 
+    /**
+     * Gets token access.
+     *
+     * @return the token access
+     * @throws AllerException the aller exception
+     */
     TokenAccess getTokenAccess() throws AllerException;
 }

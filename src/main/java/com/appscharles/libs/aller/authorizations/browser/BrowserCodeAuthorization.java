@@ -8,10 +8,18 @@ import com.appscharles.libs.fxer.factories.FXStageFactory;
 import com.appscharles.libs.fxer.factories.IFXStageFactory;
 import com.appscharles.libs.fxer.stages.FXStage;
 
+/**
+ * The type Browser code authorization.
+ */
 public class BrowserCodeAuthorization implements ICodeAuthorization {
 
     private BrowserCodeAuthorizationConfiguration configuration;
 
+    /**
+     * Instantiates a new Browser code authorization.
+     *
+     * @param configuration the configuration
+     */
     public BrowserCodeAuthorization(BrowserCodeAuthorizationConfiguration configuration) {
         this.configuration = configuration;
     }

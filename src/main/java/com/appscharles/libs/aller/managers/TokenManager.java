@@ -52,8 +52,6 @@ public class TokenManager {
     }
 
 
-
-
     /**
      * New token access token access.
      *
@@ -88,6 +86,14 @@ public class TokenManager {
         saveTokens();
     }
 
+    /**
+     * Refresh token access token access.
+     *
+     * @param loginAllegro the login allegro
+     * @param attempts     the attempts
+     * @return the token access
+     * @throws AllerException the aller exception
+     */
     public static TokenAccess refreshTokenAccess(String loginAllegro, Integer attempts) throws AllerException {
         initTokens();
         checkConfiguration();

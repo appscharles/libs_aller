@@ -3,15 +3,15 @@ package com.appscharles.libs.aller.authorizations;
 import com.appscharles.libs.aller.exceptions.AllerException;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 13.08.2018
- * Time: 12:29
- * Project name: aller
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The interface Code authorization.
  */
 public interface ICodeAuthorization {
 
+    /**
+     * Gets code.
+     *
+     * @return the code
+     * @throws AllerException the aller exception
+     */
     String getCode() throws AllerException;
 }

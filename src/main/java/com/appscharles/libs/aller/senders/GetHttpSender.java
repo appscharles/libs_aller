@@ -10,12 +10,12 @@ import java.net.URL;
 import java.util.Map;
 
 /**
- * The type Post http sender.
+ * The type Get http sender.
  */
 public class GetHttpSender extends AbstractHttpSender {
 
     /**
-     * Instantiates a new Post http sender.
+     * Instantiates a new Get http sender.
      *
      * @param url the url
      */
@@ -28,7 +28,7 @@ public class GetHttpSender extends AbstractHttpSender {
         HttpURLConnection connection = null;
         StringBuilder content;
         try {
-            this.url = new URL(this.url +((this.getUrlParameters().isEmpty())? "" : "/?" + getUrlParameters()));
+            this.url = new URL(this.url +getUrlParameters());
             connection = (HttpURLConnection) this.url.openConnection();
             connection.setRequestMethod("GET");
             for (Map.Entry<String, String> entry : this.requestProperties.entrySet()) {

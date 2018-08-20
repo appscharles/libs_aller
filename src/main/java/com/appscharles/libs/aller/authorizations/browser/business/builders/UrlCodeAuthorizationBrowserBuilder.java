@@ -6,13 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 17.08.2018
- * Time: 12:24
- * Project name: aller
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The type Url code authorization browser builder.
  */
 public class UrlCodeAuthorizationBrowserBuilder {
 
@@ -26,6 +20,14 @@ public class UrlCodeAuthorizationBrowserBuilder {
 
     }
 
+    /**
+     * Create url code authorization browser builder.
+     *
+     * @param clientId              the client id
+     * @param authorizationEndPoint the authorization end point
+     * @param redirectPort          the redirect port
+     * @return the url code authorization browser builder
+     */
     public static UrlCodeAuthorizationBrowserBuilder create(String clientId, URL authorizationEndPoint, Integer redirectPort){
         UrlCodeAuthorizationBrowserBuilder instance = new UrlCodeAuthorizationBrowserBuilder();
         instance.clientId = clientId;
@@ -34,6 +36,12 @@ public class UrlCodeAuthorizationBrowserBuilder {
         return instance;
     }
 
+    /**
+     * Build url.
+     *
+     * @return the url
+     * @throws AllerException the aller exception
+     */
     public URL build() throws AllerException{
         try {
             String patternAllegroAuthorizeUrl = this.authorizationEndPoint + "/authorize?response_type=code&client_id=%1$s&redirect_uri=%2$s";

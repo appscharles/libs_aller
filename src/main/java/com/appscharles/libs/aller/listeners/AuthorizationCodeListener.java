@@ -25,8 +25,10 @@ public class AuthorizationCodeListener extends NanoHTTPD implements IAuthorizati
     /**
      * Instantiates a new Authorization code listener.
      *
-     * @param port            the port
-     * @param listenerTimeout the listener timeout
+     * @param port                the port
+     * @param listenerTimeout     the listener timeout
+     * @param htmlSuccessResponse the html success response
+     * @param htmlFailedResponse  the html failed response
      */
     public AuthorizationCodeListener(Integer port, long listenerTimeout, String htmlSuccessResponse, String htmlFailedResponse) {
         super(port);
@@ -35,12 +37,6 @@ public class AuthorizationCodeListener extends NanoHTTPD implements IAuthorizati
         this.listenerTimeout = listenerTimeout;
     }
 
-    /**
-     * Wait and get string.
-     *
-     * @return the string
-     * @throws AllerException the aller exception
-     */
     public String waitAndGet() throws AllerException {
         this.interrupt = false;
         try {

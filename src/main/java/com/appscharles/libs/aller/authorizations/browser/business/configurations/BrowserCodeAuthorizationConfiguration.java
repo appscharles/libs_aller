@@ -3,13 +3,7 @@ package com.appscharles.libs.aller.authorizations.browser.business.configuration
 import java.net.URL;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 16.08.2018
- * Time: 11:28
- * Project name: aller
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The type Browser code authorization configuration.
  */
 public class BrowserCodeAuthorizationConfiguration {
 
@@ -23,6 +17,15 @@ public class BrowserCodeAuthorizationConfiguration {
 
     private String htmlSuccessResponse;
 
+    /**
+     * Instantiates a new Browser code authorization configuration.
+     *
+     * @param authorizationEndPoint the authorization end point
+     * @param clientId              the client id
+     * @param loginAllegro          the login allegro
+     * @param redirectPort          the redirect port
+     * @param htmlSuccessResponse   the html success response
+     */
     public BrowserCodeAuthorizationConfiguration(URL authorizationEndPoint, String clientId, String loginAllegro, Integer redirectPort, String htmlSuccessResponse) {
         this.authorizationEndPoint = authorizationEndPoint;
         this.clientId = clientId;
@@ -32,45 +35,45 @@ public class BrowserCodeAuthorizationConfiguration {
     }
 
     /**
-     * Getter for property 'clientId'.
+     * Gets client id.
      *
-     * @return Value for property 'clientId'.
+     * @return the client id
      */
     public String getClientId() {
         return clientId;
     }
 
     /**
-     * Getter for property 'loginAllegro'.
+     * Gets login allegro.
      *
-     * @return Value for property 'loginAllegro'.
+     * @return the login allegro
      */
     public String getLoginAllegro() {
         return loginAllegro;
     }
 
     /**
-     * Getter for property 'htmlSuccessResponse'.
+     * Gets html success response.
      *
-     * @return Value for property 'htmlSuccessResponse'.
+     * @return the html success response
      */
     public String getHtmlSuccessResponse() {
         return htmlSuccessResponse;
     }
 
     /**
-     * Getter for property 'authorizationEndPoint'.
+     * Gets authorization end point.
      *
-     * @return Value for property 'authorizationEndPoint'.
+     * @return the authorization end point
      */
     public URL getAuthorizationEndPoint() {
         return authorizationEndPoint;
     }
 
     /**
-     * Getter for property 'redirectPort'.
+     * Gets redirect port.
      *
-     * @return Value for property 'redirectPort'.
+     * @return the redirect port
      */
     public Integer getRedirectPort() {
         return redirectPort;

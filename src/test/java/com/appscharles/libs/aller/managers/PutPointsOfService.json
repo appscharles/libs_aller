@@ -1,0 +1,23 @@
+{
+  "externalId": null,
+  "name": "Uproszczony punkt",
+  "seller": {
+    "id": "{{sellerId}}"
+  },
+  "type": "PICKUP_POINT",
+  "address": {
+    "street": "",
+    "city": "Poznań",
+    "zipCode": "60-166",
+    "state": "wielkopolskie",
+    "countryCode": "PL",
+    "coordinates": null
+  },
+  "phoneNumber": "",
+  "email": "",
+  "openHours": [],
+  "serviceTime": null,
+  "payments": [],
+  "confirmationType": "CALL_US",
+  "status": "ACTIVE"
+}

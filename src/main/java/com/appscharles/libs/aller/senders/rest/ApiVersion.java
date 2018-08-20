@@ -6,28 +6,26 @@ package com.appscharles.libs.aller.senders.rest;
 public enum ApiVersion {
 
     /**
-     * Beta v 1 api version.
+     * V 1 api version.
      */
-    BETA_V1("beta.v1"), /**
-     * Public v 1 api version.
+    V1("v1"),
+    /**
+     * V 2 api version.
      */
-    PUBLIC_V1("public.v1"), /**
-     * Beta v 2 api version.
-     */
-    BETA_V2("beta.v2");
+    V2("v2");
 
-    ApiVersion(String name) {
-        this.name = name;
+    ApiVersion(String version) {
+        this.version = version;
     }
 
-    private final String name;
+    private final String version;
 
     /**
-     * Gets name.
+     * Gets version.
      *
-     * @return the name
+     * @return the version
      */
-    public String getName() {
-        return this.name;
+    public String getVersion() {
+        return this.version;
     }
 }

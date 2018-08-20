@@ -26,7 +26,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * The type Code authorization.
+ * The type Url code authorization.
  */
 public class UrlCodeAuthorization implements ICodeAuthorization {
 
@@ -47,7 +47,7 @@ public class UrlCodeAuthorization implements ICodeAuthorization {
     private String clientId;
 
     /**
-     * Instantiates a new Code authorization.
+     * Instantiates a new Url code authorization.
      *
      * @param clientId                  the client id
      * @param redirectPort              the redirect port

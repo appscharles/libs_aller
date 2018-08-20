@@ -6,13 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.Calendar;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 13.08.2018
- * Time: 15:13
- * Project name: aller
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The type Token access.
  */
 public class TokenAccess {
 
@@ -34,9 +28,23 @@ public class TokenAccess {
 
     private Calendar refreshTokenCreatedAt;
 
+    /**
+     * Instantiates a new Token access.
+     */
     public TokenAccess() {
     }
 
+    /**
+     * Instantiates a new Token access.
+     *
+     * @param loginAllegro the login allegro
+     * @param token        the token
+     * @param type         the type
+     * @param refreshToken the refresh token
+     * @param expiresIn    the expires in
+     * @param scope        the scope
+     * @param jti          the jti
+     */
     public TokenAccess(String loginAllegro, String token, String type, String refreshToken, long expiresIn, String scope, String jti) {
         this.loginAllegro = loginAllegro;
         this.token = token;
@@ -47,15 +55,20 @@ public class TokenAccess {
         this.jti = jti;
     }
 
+    /**
+     * Gets login allegro.
+     *
+     * @return the login allegro
+     */
     @JsonGetter("login_allegro")
     public String getLoginAllegro() {
         return loginAllegro;
     }
 
     /**
-     * Getter for property 'token'.
+     * Gets token.
      *
-     * @return Value for property 'token'.
+     * @return the token
      */
     @JsonGetter("access_token")
     public String getToken() {
@@ -63,9 +76,9 @@ public class TokenAccess {
     }
 
     /**
-     * Getter for property 'type'.
+     * Gets type.
      *
-     * @return Value for property 'type'.
+     * @return the type
      */
     @JsonGetter("token_type")
     public String getType() {
@@ -73,9 +86,9 @@ public class TokenAccess {
     }
 
     /**
-     * Getter for property 'refreshToken'.
+     * Gets refresh token.
      *
-     * @return Value for property 'refreshToken'.
+     * @return the refresh token
      */
     @JsonGetter("refresh_token")
     public String getRefreshToken() {
@@ -83,9 +96,9 @@ public class TokenAccess {
     }
 
     /**
-     * Getter for property 'expiresIn'.
+     * Gets expires in.
      *
-     * @return Value for property 'expiresIn'.
+     * @return the expires in
      */
     @JsonGetter("expires_in")
     public long getExpiresIn() {
@@ -93,9 +106,9 @@ public class TokenAccess {
     }
 
     /**
-     * Getter for property 'scope'.
+     * Gets scope.
      *
-     * @return Value for property 'scope'.
+     * @return the scope
      */
     @JsonGetter("scope")
     public String getScope() {
@@ -103,9 +116,9 @@ public class TokenAccess {
     }
 
     /**
-     * Getter for property 'jti'.
+     * Gets jti.
      *
-     * @return Value for property 'jti'.
+     * @return the jti
      */
     @JsonGetter("jti")
     public String getJti() {
@@ -113,15 +126,20 @@ public class TokenAccess {
     }
 
 
+    /**
+     * Sets login allegro.
+     *
+     * @param loginAllegro the login allegro
+     */
     @JsonSetter("login_allegro")
     public void setLoginAllegro(String loginAllegro) {
         this.loginAllegro = loginAllegro;
     }
 
     /**
-     * Setter for property 'token'.
+     * Sets token.
      *
-     * @param token Value to set for property 'token'.
+     * @param token the token
      */
     @JsonSetter("access_token")
     public void setToken(String token) {
@@ -129,9 +147,9 @@ public class TokenAccess {
     }
 
     /**
-     * Setter for property 'type'.
+     * Sets type.
      *
-     * @param type Value to set for property 'type'.
+     * @param type the type
      */
     @JsonSetter("token_type")
     public void setType(String type) {
@@ -139,9 +157,9 @@ public class TokenAccess {
     }
 
     /**
-     * Setter for property 'refreshToken'.
+     * Sets refresh token.
      *
-     * @param refreshToken Value to set for property 'refreshToken'.
+     * @param refreshToken the refresh token
      */
     @JsonSetter("refresh_token")
     public void setRefreshToken(String refreshToken) {
@@ -149,9 +167,9 @@ public class TokenAccess {
     }
 
     /**
-     * Setter for property 'expiresIn'.
+     * Sets expires in.
      *
-     * @param expiresIn Value to set for property 'expiresIn'.
+     * @param expiresIn the expires in
      */
     @JsonSetter("expires_in")
     public void setExpiresIn(long expiresIn) {
@@ -159,9 +177,9 @@ public class TokenAccess {
     }
 
     /**
-     * Setter for property 'scope'.
+     * Sets scope.
      *
-     * @param scope Value to set for property 'scope'.
+     * @param scope the scope
      */
     @JsonSetter("scope")
     public void setScope(String scope) {
@@ -169,9 +187,9 @@ public class TokenAccess {
     }
 
     /**
-     * Setter for property 'jti'.
+     * Sets jti.
      *
-     * @param jti Value to set for property 'jti'.
+     * @param jti the jti
      */
     @JsonSetter("jti")
     public void setJti(String jti) {
@@ -179,36 +197,36 @@ public class TokenAccess {
     }
 
     /**
-     * Getter for property 'createdAt'.
+     * Gets created at.
      *
-     * @return Value for property 'createdAt'.
+     * @return the created at
      */
     public Calendar getCreatedAt() {
         return createdAt;
     }
 
     /**
-     * Setter for property 'createdAt'.
+     * Sets created at.
      *
-     * @param createdAt Value to set for property 'createdAt'.
+     * @param createdAt the created at
      */
     public void setCreatedAt(Calendar createdAt) {
         this.createdAt = createdAt;
     }
 
     /**
-     * Getter for property 'refreshTokenCreatedAt'.
+     * Gets refresh token created at.
      *
-     * @return Value for property 'refreshTokenCreatedAt'.
+     * @return the refresh token created at
      */
     public Calendar getRefreshTokenCreatedAt() {
         return refreshTokenCreatedAt;
     }
 
     /**
-     * Setter for property 'refreshTokenCreatedAt'.
+     * Sets refresh token created at.
      *
-     * @param refreshTokenCreatedAt Value to set for property 'refreshTokenCreatedAt'.
+     * @param refreshTokenCreatedAt the refresh token created at
      */
     public void setRefreshTokenCreatedAt(Calendar refreshTokenCreatedAt) {
         this.refreshTokenCreatedAt = refreshTokenCreatedAt;

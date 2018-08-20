@@ -11,13 +11,7 @@ import com.appscharles.libs.aller.getters.AvailablePortGetter;
 import java.net.URL;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 17.08.2018
- * Time: 14:31
- * Project name: aller
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The type New token access builder.
  */
 public class NewTokenAccessBuilder {
 
@@ -37,6 +31,16 @@ public class NewTokenAccessBuilder {
 
     }
 
+    /**
+     * Create new token access builder.
+     *
+     * @param loginAllegro          the login allegro
+     * @param clientId              the client id
+     * @param clientSecret          the client secret
+     * @param redirectPorts         the redirect ports
+     * @param authorizationEndPoint the authorization end point
+     * @return the new token access builder
+     */
     public static NewTokenAccessBuilder create(String loginAllegro, String clientId, String clientSecret, Integer[] redirectPorts, URL authorizationEndPoint){
         NewTokenAccessBuilder instance = new NewTokenAccessBuilder();
         instance.loginAllegro = loginAllegro;
@@ -48,6 +52,12 @@ public class NewTokenAccessBuilder {
         return instance;
     }
 
+    /**
+     * Build token access.
+     *
+     * @return the token access
+     * @throws AllerException the aller exception
+     */
     public TokenAccess build() throws AllerException {
         Integer port = AvailablePortGetter.get(this.redirectPorts);
         BrowserCodeAuthorizationConfiguration browserCodeAuthorizationConfiguration = new BrowserCodeAuthorizationConfiguration(
@@ -61,9 +71,10 @@ public class NewTokenAccessBuilder {
     }
 
     /**
-     * Setter for property 'htmlSuccessResponse'.
+     * Sets html success response.
      *
-     * @param htmlSuccessResponse Value to set for property 'htmlSuccessResponse'.
+     * @param htmlSuccessResponse the html success response
+     * @return the html success response
      */
     public NewTokenAccessBuilder setHtmlSuccessResponse(String htmlSuccessResponse) {
         this.htmlSuccessResponse = htmlSuccessResponse;

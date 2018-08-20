@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class PostHttpSender extends AbstractHttpSender {
 
+    private String data;
+
     /**
      * Instantiates a new Post http sender.
      *
@@ -29,15 +31,17 @@ public class PostHttpSender extends AbstractHttpSender {
         HttpURLConnection connection = null;
         StringBuilder content;
         try {
-            connection = (HttpURLConnection) this.url.openConnection();
+            URL url = new URL(this.url + getUrlParameters());
+            connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             for (Map.Entry<String, String> entry : this.requestProperties.entrySet()) {
                 connection.setRequestProperty(entry.getKey(), entry.getValue());
             }
-            if (this.data.size() > 0){
+            if (this.data != null){
                 connection.setDoOutput(true);
+                connection.setDoInput(true);
                 try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
-                    wr.write(getUrlParameters().getBytes(this.encoding));
+                    wr.write(this.data.getBytes(this.encoding));
                 }
             }
 
@@ -71,5 +75,14 @@ public class PostHttpSender extends AbstractHttpSender {
             }
         }
         return content.toString();
+    }
+
+    /**
+     * Sets data.
+     *
+     * @param data the data
+     */
+    public void setData(String data) {
+        this.data = data;
     }
 }

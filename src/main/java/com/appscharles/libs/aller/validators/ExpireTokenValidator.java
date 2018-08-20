@@ -5,16 +5,16 @@ import com.appscharles.libs.aller.accesses.TokenAccess;
 import java.util.Calendar;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 17.08.2018
- * Time: 14:01
- * Project name: aller
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The type Expire token validator.
  */
 public class ExpireTokenValidator {
 
+    /**
+     * Is valid boolean.
+     *
+     * @param tokenAccess the token access
+     * @return the boolean
+     */
     public static boolean isValid(TokenAccess tokenAccess) {
         Calendar now = Calendar.getInstance();
         Calendar createdAt = tokenAccess.getCreatedAt();

@@ -5,4 +5,10 @@ sourceSets {
             includes = ["**/*.txt", "**/*.fxml", "**/*.css", "**/*.png", "**/*.properties", "**/*.html"]
         }
     }
+    test {
+        resources {
+            srcDirs = ["src/test/java", "src/test/resources"]
+            includes = ["**/*.json"]
+        }
+    }
 }

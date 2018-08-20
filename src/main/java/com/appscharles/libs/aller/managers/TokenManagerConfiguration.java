@@ -4,13 +4,7 @@ import java.io.File;
 import java.net.URL;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 17.08.2018
- * Time: 13:48
- * Project name: aller
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The type Token manager configuration.
  */
 public class TokenManagerConfiguration {
 
@@ -28,6 +22,16 @@ public class TokenManagerConfiguration {
 
     private String saltPassword;
 
+    /**
+     * Instantiates a new Token manager configuration.
+     *
+     * @param clientId                 the client id
+     * @param clientSecret             the client secret
+     * @param authorizationEndPoint    the authorization end point
+     * @param redirectPorts            the redirect ports
+     * @param fileConfigurationsTokens the file configurations tokens
+     * @param saltPassword             the salt password
+     */
     public TokenManagerConfiguration(String clientId, String clientSecret, URL authorizationEndPoint, Integer[] redirectPorts, File fileConfigurationsTokens, String saltPassword) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
@@ -39,62 +43,72 @@ public class TokenManagerConfiguration {
     }
 
     /**
-     * Getter for property 'clientId'.
+     * Gets client id.
      *
-     * @return Value for property 'clientId'.
+     * @return the client id
      */
     public String getClientId() {
         return clientId;
     }
 
     /**
-     * Getter for property 'clientSecret'.
+     * Gets client secret.
      *
-     * @return Value for property 'clientSecret'.
+     * @return the client secret
      */
     public String getClientSecret() {
         return clientSecret;
     }
 
+    /**
+     * Gets authorization end point.
+     *
+     * @return the authorization end point
+     */
     public URL getAuthorizationEndPoint() {
         return authorizationEndPoint;
     }
 
+    /**
+     * Get redirect ports integer [ ].
+     *
+     * @return the integer [ ]
+     */
     public Integer[] getRedirectPorts() {
         return redirectPorts;
     }
 
     /**
-     * Getter for property 'htmlSuccessResponse'.
+     * Gets html success response.
      *
-     * @return Value for property 'htmlSuccessResponse'.
+     * @return the html success response
      */
     public String getHtmlSuccessResponse() {
         return htmlSuccessResponse;
     }
 
     /**
-     * Setter for property 'htmlSuccessResponse'.
+     * Sets html success response.
      *
-     * @param htmlSuccessResponse Value to set for property 'htmlSuccessResponse'.
+     * @param htmlSuccessResponse the html success response
      */
     public void setHtmlSuccessResponse(String htmlSuccessResponse) {
         this.htmlSuccessResponse = htmlSuccessResponse;
     }
 
     /**
-     * Getter for property 'fileConfigurationsTokens'.
+     * Gets file configurations tokens.
      *
-     * @return Value for property 'fileConfigurationsTokens'.
+     * @return the file configurations tokens
      */
     public File getFileConfigurationsTokens() {
         return fileConfigurationsTokens;
     }
 
     /**
-     * Getter for property 'saltPassword'.
+     * Gets salt password.
      *
-     * @return Value for property 'saltPassword'.
+     * @return the salt password
      */
     public String getSaltPassword() {
         return saltPassword;

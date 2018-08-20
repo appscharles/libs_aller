@@ -10,7 +10,14 @@ import com.appscharles.libs.aller.getters.AvailablePortGetter;
 import com.appscharles.libs.aller.getters.ResourceContentGetter;
 import com.appscharles.libs.aller.listeners.AuthorizationCodeListener;
 import com.appscharles.libs.aller.listeners.IAuthorizationCodeListener;
+import com.appscharles.libs.aller.managers.RestManagerConfiguration;
+import com.appscharles.libs.aller.managers.TokenManagerConfiguration;
+import com.appscharles.libs.ioer.services.FileReader;
+import com.appscharles.libs.logger.configurators.Log4j2Console;
+import com.appscharles.libs.logger.services.LoggerConfigurator;
 import com.sun.javafx.application.PlatformImpl;
+import org.apache.logging.log4j.Level;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 
@@ -31,6 +38,13 @@ public class TestCase {
      */
     @Rule
     public TemporaryFolder temp = new TemporaryFolder();
+
+    @Before
+    public void before(){
+        LoggerConfigurator.config(new Log4j2Console(Level.INFO));
+        PlatformImpl.startup(()->{});
+        PlatformImpl.setImplicitExit(false);
+    }
 
     /**
      * Gets properties.
@@ -63,7 +77,41 @@ public class TestCase {
         return ApiKeyAccessBuilder.create(new File(System.getProperty("user.home"), "appscharles/libs/aller/properties.properties")).build();
     }
 
-    public File getFileConfigurationTokens(){
+    public File getFileConfigurationTokens() {
         return new File("E:\\others\\aller_test\\tokens.data");
+    }
+
+    public RestManagerConfiguration getRestManagerConfiguration() throws AllerException {
+        try {
+            TokenManagerConfiguration tokenManagerConfiguration = getTokenManagerConfiguration();
+            return new RestManagerConfiguration(
+                    new URL("https://api.allegro.pl.allegrosandbox.pl"),
+                    tokenManagerConfiguration
+            );
+        } catch (MalformedURLException e) {
+            throw new AllerException(e);
+        }
+    }
+
+    public TokenManagerConfiguration getTokenManagerConfiguration() throws MalformedURLException, AllerException {
+        return new TokenManagerConfiguration(
+                getApiKeyAccess().getClientId(), getApiKeyAccess().getClientSecret(),
+                new URL("https://allegro.pl.allegrosandbox.pl/auth/oauth"),
+                new Integer[]{11001}, getFileConfigurationTokens(), "saltPassword"
+        );
+    }
+
+    public String getLoginAllegro() throws AllerException {
+        try {
+            return getProperties().getProperty("libs_aller.test.login_allegro");
+        } catch (IOException e) {
+            throw new AllerException(e);
+        }
+    }
+
+    public String readTestResource(String testResource) throws IOException {
+        URL url = Thread.currentThread().getContextClassLoader().getResource(testResource);
+        File file = new File(url.getPath());
+        return FileReader.read(file);
     }
 }

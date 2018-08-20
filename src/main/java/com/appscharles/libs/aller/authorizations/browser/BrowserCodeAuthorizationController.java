@@ -41,16 +41,28 @@ public class BrowserCodeAuthorizationController extends AbstractControllerFX {
      */
     public BrowserCodeAuthorizationConfiguration configuration;
 
+    /**
+     * The Web view.
+     */
     @FXML
     public WebView webView;
 
+    /**
+     * The Web engine.
+     */
     public WebEngine webEngine;
 
     private String code;
 
+    /**
+     * The Login.
+     */
     @FXML
     public Label login;
 
+    /**
+     * The Progress bar.
+     */
     @FXML
     public ProgressBar progressBar;
 
@@ -114,6 +126,12 @@ public class BrowserCodeAuthorizationController extends AbstractControllerFX {
         service.shutdown();
     }
 
+    /**
+     * Gets code.
+     *
+     * @return the code
+     * @throws AllerException the aller exception
+     */
     public String getCode() throws AllerException {
         if (this.asyncOpenBrowserService.getException() != null) {
             throw new AllerException(this.asyncOpenBrowserService.getException());

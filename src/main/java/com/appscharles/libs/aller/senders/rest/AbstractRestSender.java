@@ -1,56 +1,44 @@
 package com.appscharles.libs.aller.senders.rest;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import com.appscharles.libs.aller.senders.IHttpSender;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 16.08.2018
- * Time: 09:06
- * Project name: aller
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The type Abstract rest sender.
  */
 public abstract class AbstractRestSender implements IRestSender {
 
-    protected Map<String, String> data;
+    /**
+     * The Http sender.
+     */
+    protected IHttpSender httpSender ;
 
-    protected Map<String, String> requestProperties;
-
-    protected URL urlCallMethod ;
-
-    protected String resource;
-
+    /**
+     * The Token.
+     */
     protected String token;
 
+    /**
+     * The Api version.
+     */
     protected ApiVersion apiVersion;
 
-    public AbstractRestSender(String resource, ApiVersion apiVersion, String token, URL urlCallMethod) {
-        this.resource = resource;
+    /**
+     * The Content type same as accept.
+     */
+    protected Boolean contentTypeSameAsAccept;
+
+    /**
+     * Instantiates a new Abstract rest sender.
+     *
+     * @param httpSender              the http sender
+     * @param apiVersion              the api version
+     * @param token                   the token
+     * @param contentTypeSameAsAccept the content type same as accept
+     */
+    public AbstractRestSender(IHttpSender httpSender, ApiVersion apiVersion, String token, Boolean contentTypeSameAsAccept) {
+        this.httpSender = httpSender;
         this.apiVersion = apiVersion;
         this.token = token;
-        this.urlCallMethod = urlCallMethod;
-        this.data = new HashMap<>();
-        this.requestProperties =  new HashMap<>();
-    }
-
-    @Override
-    public <T> T addData(String key, String value) {
-        this.data.put(key, value);
-        return (T)this;
-    }
-
-    @Override
-    public <T> T setData(Map<String, String> data) {
-        this.data = data;
-        return (T)this;
-    }
-
-    @Override
-    public <T> T addRequestProperty(String key, String value) {
-        this.requestProperties.put(key, value);
-        return (T) this;
+        this.contentTypeSameAsAccept = contentTypeSameAsAccept;
     }
 }
