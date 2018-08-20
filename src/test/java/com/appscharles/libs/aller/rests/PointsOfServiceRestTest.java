@@ -3,12 +3,12 @@ package com.appscharles.libs.aller.rests;
 import com.appscharles.libs.aller.TestCase;
 import com.appscharles.libs.aller.exceptions.AllerException;
 import com.appscharles.libs.aller.managers.RestManager;
-import com.appscharles.libs.aller.models.PointsOfService;
-import com.appscharles.libs.aller.models.commons.Seller;
-import com.appscharles.libs.aller.models.pointsOfService.Address;
-import com.appscharles.libs.aller.models.pointsOfService.enums.ConfirmationType;
-import com.appscharles.libs.aller.models.pointsOfService.enums.Status;
-import com.appscharles.libs.aller.models.pointsOfService.enums.Type;
+import com.appscharles.libs.aller.models.PointOfService;
+import com.appscharles.libs.aller.models.Seller;
+import com.appscharles.libs.aller.models.pointsOfServices.Address;
+import com.appscharles.libs.aller.models.pointsOfServices.enums.ConfirmationType;
+import com.appscharles.libs.aller.models.pointsOfServices.enums.Status;
+import com.appscharles.libs.aller.models.pointsOfServices.enums.Type;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,10 +29,10 @@ public class PointsOfServiceRestTest extends TestCase {
     public void shouldAddPointsOfService() throws AllerException {
         RestManager.setConfiguration(getRestManagerConfiguration());
         String sellerId = RestManager.getSellerId(getLoginAllegro());
-        PointsOfService pointsOfService = new PointsOfService("My point",
+        PointOfService pointsOfService = new PointOfService("My point",
                 new Seller(sellerId), Type.PICKUP_POINT, new Address("Street", "City", "45-300", "świętokrzyskie", "PL"),
                 ConfirmationType.CALL_US, Status.ACTIVE);
-        pointsOfService = PointsOfServiceRest.add(pointsOfService, getLoginAllegro());
+        pointsOfService = PointOfServiceRest.add(pointsOfService, getLoginAllegro());
         Assert.assertNotNull(pointsOfService.getId());
     }
 
@@ -40,11 +40,11 @@ public class PointsOfServiceRestTest extends TestCase {
     public void shouldGetAllPointsOfServices() throws AllerException {
         RestManager.setConfiguration(getRestManagerConfiguration());
         String sellerId = RestManager.getSellerId(getLoginAllegro());
-        PointsOfService pointsOfService = new PointsOfService("My point",
+        PointOfService pointsOfService = new PointOfService("My point",
                 new Seller(sellerId), Type.PICKUP_POINT, new Address("Street", "City", "45-300", "świętokrzyskie", "PL"),
                 ConfirmationType.CALL_US, Status.ACTIVE);
-       PointsOfServiceRest.add(pointsOfService, getLoginAllegro());
-        List<PointsOfService> pointsOfServices = PointsOfServiceRest.getAll(sellerId, getLoginAllegro());
+       PointOfServiceRest.add(pointsOfService, getLoginAllegro());
+        List<PointOfService> pointsOfServices = PointOfServiceRest.getAll(sellerId, getLoginAllegro());
        Assert.assertTrue(pointsOfServices.size()>0);
     }
 
@@ -52,12 +52,12 @@ public class PointsOfServiceRestTest extends TestCase {
     public void shouldGetPointsOfService() throws AllerException {
         RestManager.setConfiguration(getRestManagerConfiguration());
         String sellerId = RestManager.getSellerId(getLoginAllegro());
-        PointsOfService pointsOfService = new PointsOfService("My point",
+        PointOfService pointsOfService = new PointOfService("My point",
                 new Seller(sellerId), Type.PICKUP_POINT, new Address("Street", "City", "45-300", "świętokrzyskie", "PL"),
                 ConfirmationType.CALL_US, Status.ACTIVE);
-        pointsOfService = PointsOfServiceRest.add(pointsOfService, getLoginAllegro());
+        pointsOfService = PointOfServiceRest.add(pointsOfService, getLoginAllegro());
         Assert.assertNotNull(pointsOfService.getId());
-        pointsOfService = PointsOfServiceRest.get(pointsOfService.getId(), getLoginAllegro());
+        pointsOfService = PointOfServiceRest.get(pointsOfService.getId(), getLoginAllegro());
         Assert.assertNotNull(pointsOfService.getId());
     }
 
@@ -65,13 +65,13 @@ public class PointsOfServiceRestTest extends TestCase {
     public void shouldUpdatePointsOfService() throws AllerException {
         RestManager.setConfiguration(getRestManagerConfiguration());
         String sellerId = RestManager.getSellerId(getLoginAllegro());
-        PointsOfService pointsOfService = new PointsOfService("My point",
+        PointOfService pointsOfService = new PointOfService("My point",
                 new Seller(sellerId), Type.PICKUP_POINT, new Address("Street", "City", "45-300", "świętokrzyskie", "PL"),
                 ConfirmationType.CALL_US, Status.ACTIVE);
-        pointsOfService = PointsOfServiceRest.add(pointsOfService, getLoginAllegro());
+        pointsOfService = PointOfServiceRest.add(pointsOfService, getLoginAllegro());
         pointsOfService.setName("New name");
-        pointsOfService = PointsOfServiceRest.update(pointsOfService, getLoginAllegro());
-        PointsOfService pointsOfServiceGet = PointsOfServiceRest.get(pointsOfService.getId(), getLoginAllegro());
+        pointsOfService = PointOfServiceRest.update(pointsOfService, getLoginAllegro());
+        PointOfService pointsOfServiceGet = PointOfServiceRest.get(pointsOfService.getId(), getLoginAllegro());
         Assert.assertNotNull(pointsOfServiceGet.getName().equals("New name"));
     }
 
@@ -79,10 +79,10 @@ public class PointsOfServiceRestTest extends TestCase {
     public void shouldDeletePointsOfService() throws AllerException {
         RestManager.setConfiguration(getRestManagerConfiguration());
         String sellerId = RestManager.getSellerId(getLoginAllegro());
-        List<PointsOfService> pointsOfServices = PointsOfServiceRest.getAll(sellerId, getLoginAllegro());
-        for (PointsOfService pointsOfService : pointsOfServices) {
-            PointsOfServiceRest.delete(pointsOfService.getId(), getLoginAllegro());
+        List<PointOfService> pointsOfServices = PointOfServiceRest.getAll(sellerId, getLoginAllegro());
+        for (PointOfService pointsOfService : pointsOfServices) {
+            PointOfServiceRest.delete(pointsOfService.getId(), getLoginAllegro());
         }
-        Assert.assertTrue(PointsOfServiceRest.getAll(sellerId, getLoginAllegro()).size() == 0);
+        Assert.assertTrue(PointOfServiceRest.getAll(sellerId, getLoginAllegro()).size() == 0);
     }
 }

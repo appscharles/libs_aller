@@ -1,0 +1,76 @@
+{
+  "id": "6205590234",
+  "name": "My offer",
+  "category": {
+    "id": "14237"
+  },
+  "parameters": [
+    {
+      "id": "11323",
+      "valuesIds": [
+        "11323_1"
+      ],
+      "values": [],
+      "rangeValue": null
+    }
+  ],
+  "ean": null,
+  "description": {
+    "sections": [
+      {
+        "items": [
+          {
+            "type": "TEXT",
+            "content": "<p>content offer</p>"
+          }
+        ]
+      }
+    ]
+  },
+  "compatibilityList": null,
+  "images": [],
+  "sellingMode": {
+    "format": "BUY_NOW",
+    "price": {
+      "amount": "12.23",
+      "currency": "PLN"
+    },
+    "startingPrice": null,
+    "minimalPrice": null
+  },
+  "stock": {
+    "available": 20,
+    "unit": "UNIT"
+  },
+  "publication": {
+    "duration": null,
+    "status": "INACTIVE",
+    "startingAt": null,
+    "endingAt": null
+  },
+  "delivery": null,
+  "payments": {
+    "invoice": "NO_INVOICE"
+  },
+  "afterSalesServices": null,
+  "additionalServices": null,
+  "sizeTable": null,
+  "promotion": null,
+  "location": null,
+  "external": null,
+  "contact": null,
+  "validation": {
+    "errors": [
+      {
+        "code": "VALIDATION_ERROR",
+        "message": "Shipping rates may not be empty.",
+        "details": "",
+        "path": "",
+        "userMessage": "Podaj identyfikator cennika dostawy. Identyfikator cennika dostawy nie może być pusty."
+      }
+    ],
+    "validatedAt": "2018-08-20T14:32:27.918Z"
+  },
+  "createdAt": "2018-08-20T14:32:27Z",
+  "updatedAt": "2018-08-20T14:32:27.919Z"
+}

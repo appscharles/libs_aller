@@ -9,16 +9,20 @@ public class RestManagerConfiguration {
 
     private URL urlCallMethod;
 
+    private LimitManagerConfiguration limitManagerConfiguration;
+
     private TokenManagerConfiguration tokenManagerConfiguration;
 
     /**
      * Instantiates a new Rest manager configuration.
      *
      * @param urlCallMethod             the url call method
+     * @param limitManagerConfiguration the limit manager configuration
      * @param tokenManagerConfiguration the token manager configuration
      */
-    public RestManagerConfiguration(URL urlCallMethod, TokenManagerConfiguration tokenManagerConfiguration) {
+    public RestManagerConfiguration(URL urlCallMethod, LimitManagerConfiguration limitManagerConfiguration,  TokenManagerConfiguration tokenManagerConfiguration) {
         this.urlCallMethod = urlCallMethod;
+        this.limitManagerConfiguration = limitManagerConfiguration;
         this.tokenManagerConfiguration = tokenManagerConfiguration;
     }
 
@@ -29,6 +33,15 @@ public class RestManagerConfiguration {
      */
     public URL getUrlCallMethod() {
         return urlCallMethod;
+    }
+
+    /**
+     * Gets limit manager configuration.
+     *
+     * @return the limit manager configuration
+     */
+    public LimitManagerConfiguration getLimitManagerConfiguration() {
+        return limitManagerConfiguration;
     }
 
     /**

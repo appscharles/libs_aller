@@ -1,6 +1,7 @@
 package com.appscharles.libs.aller.senders.rest;
 
 import com.appscharles.libs.aller.exceptions.AllerException;
+import com.appscharles.libs.aller.managers.LimitManager;
 import com.appscharles.libs.aller.senders.IHttpSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,6 +27,7 @@ public class RequestRestSender extends AbstractRestSender {
 
     @Override
     public String getResponse() throws AllerException {
+        LimitManager.addRequestWithWait("localhost");
         this.httpSender.addRequestProperty("Accept-Language", "pl-PL");
         this.httpSender.addRequestProperty("Authorization", "Bearer " + this.token);
         try {

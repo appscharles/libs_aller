@@ -236,6 +236,7 @@ public class RestManager {
      */
     public static void setConfiguration(RestManagerConfiguration configuration) {
         RestManager.configuration = configuration;
+        LimitManager.setConfiguration(configuration.getLimitManagerConfiguration());
         TokenManager.setConfiguration(configuration.getTokenManagerConfiguration());
     }
 

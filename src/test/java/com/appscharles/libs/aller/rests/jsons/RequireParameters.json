@@ -1,0 +1,592 @@
+{
+  "parameters": [
+    {
+      "id": "11323",
+      "name": "Stan",
+      "type": "dictionary",
+      "required": true,
+      "unit": null,
+      "options": {
+        "variantsAllowed": true
+      },
+      "dictionary": [
+        {
+          "id": "11323_1",
+          "value": "Nowy"
+        },
+        {
+          "id": "11323_2",
+          "value": "Używany"
+        },
+        {
+          "id": "11323_238066",
+          "value": "Po zwrocie"
+        },
+        {
+          "id": "11323_238058",
+          "value": "Powystawowy"
+        },
+        {
+          "id": "11323_238062",
+          "value": "Uszkodzony"
+        },
+        {
+          "id": "11323_246534",
+          "value": "Odnowiony przez producenta"
+        }
+      ],
+      "restrictions": {
+        "multipleChoices": false
+      }
+    },
+    {
+      "id": "3090",
+      "name": "Informacje dodatkowe",
+      "type": "dictionary",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": true
+      },
+      "dictionary": [
+        {
+          "id": "3090_1",
+          "value": "Czarno-biała"
+        },
+        {
+          "id": "3090_2",
+          "value": "Kolorowa"
+        },
+        {
+          "id": "3090_4",
+          "value": "Podczerwień"
+        }
+      ],
+      "restrictions": {
+        "multipleChoices": true
+      }
+    },
+    {
+      "id": "17448",
+      "name": "Waga (z opakowaniem)",
+      "type": "float",
+      "required": false,
+      "unit": "kg",
+      "options": {
+        "variantsAllowed": true
+      },
+      "restrictions": {
+        "min": 0.0,
+        "max": 3.4028235E38,
+        "range": false,
+        "precision": 2
+      }
+    },
+    {
+      "id": "217585",
+      "name": "Model",
+      "type": "string",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "minLength": 1,
+        "maxLength": 30,
+        "maxValues": 10,
+        "multipleChoices": false
+      }
+    },
+    {
+      "id": "203697",
+      "name": "Szerokość produktu (cm)",
+      "type": "float",
+      "required": false,
+      "unit": "",
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "min": -3.4028235E38,
+        "max": 3.4028235E38,
+        "range": false,
+        "precision": 2
+      }
+    },
+    {
+      "id": "203701",
+      "name": "Wysokość produktu (cm)",
+      "type": "float",
+      "required": false,
+      "unit": "",
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "min": -3.4028235E38,
+        "max": 3.4028235E38,
+        "range": false,
+        "precision": 2
+      }
+    },
+    {
+      "id": "203705",
+      "name": "Głębokość produktu (cm)",
+      "type": "float",
+      "required": false,
+      "unit": "",
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "min": -3.4028235E38,
+        "max": 3.4028235E38,
+        "range": false,
+        "precision": 2
+      }
+    },
+    {
+      "id": "203709",
+      "name": "Waga produktu (g)",
+      "type": "float",
+      "required": false,
+      "unit": "",
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "min": -3.4028235E38,
+        "max": 3.4028235E38,
+        "range": false,
+        "precision": 2
+      }
+    },
+    {
+      "id": "217593",
+      "name": "Obudowa",
+      "type": "dictionary",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "dictionary": [
+        {
+          "id": "217593_277857",
+          "value": "kompaktowa (box)"
+        },
+        {
+          "id": "217593_277861",
+          "value": "kopułkowa (dome)"
+        },
+        {
+          "id": "217593_277865",
+          "value": "tubowa (bullet)"
+        },
+        {
+          "id": "217593_277869",
+          "value": "inna"
+        }
+      ],
+      "restrictions": {
+        "multipleChoices": false
+      }
+    },
+    {
+      "id": "217597",
+      "name": "Technologia",
+      "type": "dictionary",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "dictionary": [
+        {
+          "id": "217597_277873",
+          "value": "IP"
+        },
+        {
+          "id": "217597_277877",
+          "value": "AHD"
+        },
+        {
+          "id": "217597_277881",
+          "value": "HD-TVI"
+        },
+        {
+          "id": "217597_277885",
+          "value": "HD-SDI"
+        },
+        {
+          "id": "217597_277889",
+          "value": "HD-CVI"
+        },
+        {
+          "id": "217597_277893",
+          "value": "CVBS"
+        },
+        {
+          "id": "217597_277897",
+          "value": "ANALOG"
+        },
+        {
+          "id": "217597_277901",
+          "value": "inna"
+        }
+      ],
+      "restrictions": {
+        "multipleChoices": false
+      }
+    },
+    {
+      "id": "217601",
+      "name": "Rozmiar przetwornika",
+      "type": "dictionary",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "dictionary": [
+        {
+          "id": "217601_277905",
+          "value": "2/3\""
+        },
+        {
+          "id": "217601_277909",
+          "value": "1/2\""
+        },
+        {
+          "id": "217601_277913",
+          "value": "1/3\""
+        },
+        {
+          "id": "217601_277917",
+          "value": "1/4\""
+        },
+        {
+          "id": "217601_277921",
+          "value": "inny"
+        }
+      ],
+      "restrictions": {
+        "multipleChoices": false
+      }
+    },
+    {
+      "id": "217605",
+      "name": "Procesor sygnałowy DSP",
+      "type": "string",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "minLength": 1,
+        "maxLength": 30,
+        "maxValues": 10,
+        "multipleChoices": false
+      }
+    },
+    {
+      "id": "38",
+      "name": "Rozdzielczość matrycy (0 - 100 Mpx)",
+      "type": "float",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "min": 0.0,
+        "max": 100.0,
+        "range": false,
+        "precision": 2
+      }
+    },
+    {
+      "id": "208022",
+      "name": "Współczynnik sygnał/szum (dB)",
+      "type": "integer",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "min": -2147483648,
+        "max": 2147483647,
+        "range": false
+      }
+    },
+    {
+      "id": "217609",
+      "name": "Czułość (lx)",
+      "type": "float",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "min": -3.4028235E38,
+        "max": 3.4028235E38,
+        "range": false,
+        "precision": 2
+      }
+    },
+    {
+      "id": "217613",
+      "name": "Obiektyw",
+      "type": "dictionary",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "dictionary": [
+        {
+          "id": "217613_277925",
+          "value": "stałoogniskowy"
+        },
+        {
+          "id": "217613_277929",
+          "value": "zmiennoogniskowy"
+        }
+      ],
+      "restrictions": {
+        "multipleChoices": false
+      }
+    },
+    {
+      "id": "217617",
+      "name": "Klasa szczelności kamery",
+      "type": "dictionary",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "dictionary": [
+        {
+          "id": "217617_277941",
+          "value": "IP55"
+        },
+        {
+          "id": "217617_277945",
+          "value": "IP56"
+        },
+        {
+          "id": "217617_277949",
+          "value": "IP57"
+        },
+        {
+          "id": "217617_277953",
+          "value": "IP65"
+        },
+        {
+          "id": "217617_277957",
+          "value": "IP66"
+        },
+        {
+          "id": "217617_277961",
+          "value": "IP67"
+        },
+        {
+          "id": "217617_277965",
+          "value": "inna"
+        }
+      ],
+      "restrictions": {
+        "multipleChoices": false
+      }
+    },
+    {
+      "id": "217621",
+      "name": "Klasa odporności mechanicznej",
+      "type": "dictionary",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "dictionary": [
+        {
+          "id": "217621_277969",
+          "value": "IK05"
+        },
+        {
+          "id": "217621_277973",
+          "value": "IK06"
+        },
+        {
+          "id": "217621_277977",
+          "value": "IK07"
+        },
+        {
+          "id": "217621_277981",
+          "value": "IK08"
+        },
+        {
+          "id": "217621_277985",
+          "value": "IK09"
+        },
+        {
+          "id": "217621_277989",
+          "value": "IK10"
+        },
+        {
+          "id": "217621_277993",
+          "value": "inna"
+        }
+      ],
+      "restrictions": {
+        "multipleChoices": false
+      }
+    },
+    {
+      "id": "217625",
+      "name": "Liczba diod podczerwieni",
+      "type": "integer",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "min": -2147483648,
+        "max": 2147483647,
+        "range": false
+      }
+    },
+    {
+      "id": "217629",
+      "name": "Zasięg podczerwieni (m)",
+      "type": "integer",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "min": -2147483648,
+        "max": 2147483647,
+        "range": false
+      }
+    },
+    {
+      "id": "217637",
+      "name": "Funkcje",
+      "type": "dictionary",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "dictionary": [
+        {
+          "id": "217637_1",
+          "value": "adaptacyjna reprodukcja sygnału (ATR)"
+        },
+        {
+          "id": "217637_2",
+          "value": "automatyczna przysłona obiektywu (AI)"
+        },
+        {
+          "id": "217637_4",
+          "value": "automatyczna elektroniczna migawka (AES)"
+        },
+        {
+          "id": "217637_8",
+          "value": "automatyczna regulacja wzmocnienia (AGC)"
+        },
+        {
+          "id": "217637_16",
+          "value": "automatyczny balans bieli (AWB)"
+        },
+        {
+          "id": "217637_32",
+          "value": "cyfrowa redukcja szumów (DNR)"
+        },
+        {
+          "id": "217637_64",
+          "value": "cyfrowy stabilizator obrazu (DIS)"
+        },
+        {
+          "id": "217637_128",
+          "value": "kompensacja światła z tyłu (BLC)"
+        },
+        {
+          "id": "217637_256",
+          "value": "kompensacja silnego światła (HLC)"
+        },
+        {
+          "id": "217637_512",
+          "value": "nagrywanie na kartę pamięci"
+        },
+        {
+          "id": "217637_1024",
+          "value": "szeroki zakres dynamiki (WDR)"
+        },
+        {
+          "id": "217637_2048",
+          "value": "usuwanie migotania (FLC)"
+        },
+        {
+          "id": "217637_4096",
+          "value": "sterowanie PTZ"
+        },
+        {
+          "id": "217637_8192",
+          "value": "głośnik"
+        },
+        {
+          "id": "217637_16384",
+          "value": "mikrofon"
+        },
+        {
+          "id": "217637_32768",
+          "value": "Wi-Fi"
+        }
+      ],
+      "restrictions": {
+        "multipleChoices": true
+      }
+    },
+    {
+      "id": "217641",
+      "name": "Cechy dodatkowe",
+      "type": "string",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "minLength": 1,
+        "maxLength": 30,
+        "maxValues": 5,
+        "multipleChoices": true
+      }
+    },
+    {
+      "id": "217645",
+      "name": "Załączone wyposażenie",
+      "type": "string",
+      "required": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": false
+      },
+      "restrictions": {
+        "minLength": 1,
+        "maxLength": 40,
+        "maxValues": 10,
+        "multipleChoices": true
+      }
+    }
+  ]
+}

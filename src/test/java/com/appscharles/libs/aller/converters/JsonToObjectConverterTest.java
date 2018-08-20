@@ -3,7 +3,7 @@ package com.appscharles.libs.aller.converters;
 import com.appscharles.libs.aller.TestCase;
 import com.appscharles.libs.aller.exceptions.AllerException;
 import com.appscharles.libs.aller.managers.RestManager;
-import com.appscharles.libs.aller.models.PointsOfService;
+import com.appscharles.libs.aller.models.PointOfService;
 import com.appscharles.libs.aller.senders.rest.ApiVersion;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class JsonToObjectConverterTest extends TestCase {
         String json = readTestResource("com/appscharles/libs/aller/managers/PutPointsOfService.json");
         json = json.replace("{{sellerId}}", RestManager.getSellerId(getLoginAllegro()));
         String response = RestManager.post("points-of-service", ApiVersion.V1,json, getLoginAllegro(), true);
-        PointsOfService pointsOfService = JsonToObjectConverter.convert(response, PointsOfService.class);
+        PointOfService pointsOfService = JsonToObjectConverter.convert(response, PointOfService.class);
         Assert.assertNotNull(pointsOfService);
     }
 }

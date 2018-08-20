@@ -1,0 +1,26 @@
+{
+  "id": "0e7e9e99-c188-45fa-a42b-b2e346e12afc",
+  "name": "New name 2018-08-20 16:30:31",
+  "rates": [
+    {
+      "deliveryMethod": {
+        "id": "7203cb90-864c-4cda-bf08-dc883f0c78ad",
+        "name": null
+      },
+      "maxQuantityPerPackage": 1,
+      "firstItemRate": {
+        "amount": "12.12",
+        "currency": "PLN"
+      },
+      "nextItemRate": {
+        "amount": "13.22",
+        "currency": "PLN"
+      },
+      "shippingTime": {
+        "from": "PT72H",
+        "to": "PT120H"
+      }
+    }
+  ],
+  "lastModified": "2018-08-20T14:21:31.13Z"
+}
