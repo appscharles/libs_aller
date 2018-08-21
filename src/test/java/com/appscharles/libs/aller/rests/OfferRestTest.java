@@ -51,6 +51,46 @@ public class OfferRestTest extends TestCase {
     @Test
     public void shouldGetOffer() throws AllerException {
         RestManager.setConfiguration(getRestManagerConfiguration());
-       OfferRest.get("6205589693", getLoginAllegro());
+        List<DeliveryMethod> deliveryMethods = DeliveryMethodRest.getAll(getLoginAllegro());
+        ShippingRate shippingRate = new ShippingRate("ShippingName", Arrays.asList(new Rate(deliveryMethods.get(0), 1, new ItemRate("12.12", "PLN"), new ItemRate("13.22", "PLN"), new ShippingTime("PT72H", "PT120H"))));
+        shippingRate = ShippingRatesRest.add(shippingRate, getLoginAllegro());
+
+        Offer offer = new Offer("My offer", new Category("14237"),
+                Arrays.asList(new Parameter("11323", Arrays.asList("11323_1"))),
+                new OfferDescription(Arrays.asList(new DescriptionSection(
+                        Arrays.asList(new DescriptionSectionItem(ItemType.TEXT, "<p>content offer</p>"))
+                ))), new SellingMode(Format.BUY_NOW, new Price("12.23", "PLN")),
+                new Stock(20, Unit.UNIT),
+                new Delivery("PT168H", new JustId(shippingRate.getId())),
+                new Payments(InvoiceType.NO_INVOICE),
+                new Location("city", "23-400", "WIELKOPOLSKIE","PL"));
+        offer =  OfferRest.add(offer, getLoginAllegro());
+        RestManager.setConfiguration(getRestManagerConfiguration());
+        offer = OfferRest.get(offer.getId(), getLoginAllegro());
+      Assert.assertNotNull(offer);
+    }
+
+    @Test
+    public void shouldUpdateOffer() throws AllerException {
+        RestManager.setConfiguration(getRestManagerConfiguration());
+        List<DeliveryMethod> deliveryMethods = DeliveryMethodRest.getAll(getLoginAllegro());
+        ShippingRate shippingRate = new ShippingRate("ShippingName", Arrays.asList(new Rate(deliveryMethods.get(0), 1, new ItemRate("12.12", "PLN"), new ItemRate("13.22", "PLN"), new ShippingTime("PT72H", "PT120H"))));
+        shippingRate = ShippingRatesRest.add(shippingRate, getLoginAllegro());
+
+        Offer offer = new Offer("My offer", new Category("14237"),
+                Arrays.asList(new Parameter("11323", Arrays.asList("11323_1"))),
+                new OfferDescription(Arrays.asList(new DescriptionSection(
+                        Arrays.asList(new DescriptionSectionItem(ItemType.TEXT, "<p>content offer</p>"))
+                ))), new SellingMode(Format.BUY_NOW, new Price("12.23", "PLN")),
+                new Stock(20, Unit.UNIT),
+                new Delivery("PT168H", new JustId(shippingRate.getId())),
+                new Payments(InvoiceType.NO_INVOICE),
+                new Location("city", "23-400", "WIELKOPOLSKIE","PL"));
+        offer =  OfferRest.add(offer, getLoginAllegro());
+        offer = OfferRest.get(offer.getId(), getLoginAllegro());
+        offer.getStock().setAvailable(3);
+        offer = OfferRest.update(offer, getLoginAllegro());
+        Assert.assertNotNull(offer);
+        Assert.assertTrue(offer.getStock().getAvailable().equals(3));
     }
 }

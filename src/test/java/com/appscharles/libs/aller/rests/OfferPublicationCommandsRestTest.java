@@ -43,7 +43,6 @@ public class OfferPublicationCommandsRestTest extends TestCase {
         List<DeliveryMethod> deliveryMethods = DeliveryMethodRest.getAll(getLoginAllegro());
         ShippingRate shippingRate = new ShippingRate("ShippingName", Arrays.asList(new Rate(deliveryMethods.get(0), 1, new ItemRate("12.12", "PLN"), new ItemRate("13.22", "PLN"), new ShippingTime("PT72H", "PT120H"))));
         shippingRate = ShippingRatesRest.add(shippingRate, getLoginAllegro());
-
         Offer offer = new Offer("My offer", new Category("14237"),
                 Arrays.asList(new Parameter("11323", Arrays.asList("11323_1"))),
                 new OfferDescription(Arrays.asList(new DescriptionSection(
