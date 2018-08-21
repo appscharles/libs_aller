@@ -9,6 +9,8 @@ String sellerId = RestManager.getSellerId("{{login_allegro}}");
 ListingResponse response = OffersListingRest.get(sellerId,"{{login_allegro}}");
 ```
 
+Register your application in Allegro.pl, with localhost redirect url, example `http://localhost:11001`.
+
 # Include library to project by gradle
 
 ```
