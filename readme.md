@@ -11,6 +11,8 @@ ListingResponse response = OffersListingRest.get(sellerId,"{{login_allegro}}");
 
 Register your application in Allegro.pl, with localhost redirect url, example `http://localhost:11001`.
 
+More methods rest in package `com.appscharles.libs.aller.rests`.
+
 # Include library to project by gradle
 
 ```
