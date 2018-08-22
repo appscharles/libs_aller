@@ -30,6 +30,8 @@ public class DeleteHttpSender extends AbstractHttpSender {
         try {
             this.url = new URL(this.url +getUrlParameters());
             connection = (HttpURLConnection) this.url.openConnection();
+            connection.setConnectTimeout(60000);
+            connection.setReadTimeout(60000);
             connection.setRequestMethod("DELETE");
             for (Map.Entry<String, String> entry : this.requestProperties.entrySet()) {
                 connection.setRequestProperty(entry.getKey(), entry.getValue());

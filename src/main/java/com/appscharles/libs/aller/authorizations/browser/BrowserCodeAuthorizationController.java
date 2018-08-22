@@ -4,7 +4,7 @@ import com.appscharles.libs.aller.authorizations.browser.business.configurations
 import com.appscharles.libs.aller.authorizations.browser.business.services.AsyncOpenBrowserService;
 import com.appscharles.libs.aller.authorizations.browser.business.services.ListenerCodeService;
 import com.appscharles.libs.aller.exceptions.AllerException;
-import com.appscharles.libs.fxer.controllers.AbstractControllerFX;
+import com.appscharles.libs.fxer.controllers.AbstractStageControllerFX;
 import com.sun.javafx.application.PlatformImpl;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 /**
  * The type Browser code authorization controller.
  */
-public class BrowserCodeAuthorizationController extends AbstractControllerFX {
+public class BrowserCodeAuthorizationController extends AbstractStageControllerFX {
 
     private static final Logger logger = LogManager.getLogger(BrowserCodeAuthorizationController.class);
 

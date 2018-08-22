@@ -34,6 +34,8 @@ public class PostHttpSender extends AbstractHttpSender {
             URL url = new URL(this.url + getUrlParameters());
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
+            connection.setConnectTimeout(60000);
+            connection.setReadTimeout(60000);
             for (Map.Entry<String, String> entry : this.requestProperties.entrySet()) {
                 connection.setRequestProperty(entry.getKey(), entry.getValue());
             }
