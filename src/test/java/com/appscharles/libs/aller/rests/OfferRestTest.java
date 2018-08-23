@@ -93,4 +93,5 @@ public class OfferRestTest extends TestCase {
         Assert.assertNotNull(offer);
         Assert.assertTrue(offer.getStock().getAvailable().equals(3));
     }
+
 }

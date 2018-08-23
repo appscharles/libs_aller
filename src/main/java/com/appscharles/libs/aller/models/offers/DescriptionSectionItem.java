@@ -7,10 +7,11 @@ import com.appscharles.libs.aller.models.offers.enums.ItemType;
  */
 public class DescriptionSectionItem  {
 
-
     private ItemType type;
 
     private String content;
+
+    private String url;
 
     /**
      * Instantiates a new Description section item.
@@ -21,12 +22,17 @@ public class DescriptionSectionItem  {
     /**
      * Instantiates a new Description section item.
      *
-     * @param type    the type
-     * @param content the content
+     * @param type         the type
+     * @param contentOrUrl the content or url
      */
-    public DescriptionSectionItem(ItemType type, String content) {
+    public DescriptionSectionItem(ItemType type, String contentOrUrl) {
         this.type = type;
-        this.content = content;
+        if (type.equals(ItemType.TEXT)){
+            this.content = contentOrUrl;
+        } else if (type.equals(ItemType.IMAGE)){
+            this.url = contentOrUrl;
+        }
+
     }
 
     /**
@@ -63,5 +69,23 @@ public class DescriptionSectionItem  {
      */
     public void setContent(String content) {
         this.content = content;
+    }
+
+    /**
+     * Gets url.
+     *
+     * @return the url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Sets url.
+     *
+     * @param url the url
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
