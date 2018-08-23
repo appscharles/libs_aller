@@ -10,7 +10,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * The type Rest manager configuration builder.
@@ -94,9 +93,7 @@ public class RestManagerConfigurationBuilder {
             tokenManagerConfiguration.setHtmlSuccessResponse(this.htmlSuccessResponse);
         }
         LimitManagerConfiguration limitManagerConfiguration = new LimitManagerConfiguration();
-        if (Objects.isNull(this.ipRequestPerSeconds) == false){
             limitManagerConfiguration.setIpRequestPerSeconds(this.ipRequestPerSeconds);
-        }
         return new RestManagerConfiguration(apiCallMethodsUrl, limitManagerConfiguration, tokenManagerConfiguration);
     }
 
