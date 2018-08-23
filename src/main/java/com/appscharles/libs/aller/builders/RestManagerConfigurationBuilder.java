@@ -64,6 +64,7 @@ public class RestManagerConfigurationBuilder {
         instance.redirectPorts.add(redirectPort);
         instance.saltPassword = saltPassword;
         instance.configurationTokensFile = configurationTokensFile;
+        instance.ipRequestPerSeconds = 110;
         return instance;
     }
 
