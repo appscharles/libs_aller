@@ -5,7 +5,7 @@ import com.appscharles.libs.aller.authorizations.RefreshTokenAuthorization;
 import com.appscharles.libs.aller.builders.NewTokenAccessBuilder;
 import com.appscharles.libs.aller.exceptions.AllerException;
 import com.appscharles.libs.aller.getters.AvailablePortGetter;
-import com.appscharles.libs.aller.validators.ExpireRefreshTokenValidator;
+import com.appscharles.libs.aller.validators.RefreshTokenValidator;
 import com.appscharles.libs.aller.validators.ExpireTokenValidator;
 import com.appscharles.libs.ioer.services.FileReader;
 import com.appscharles.libs.ioer.services.FileWriter;
@@ -40,7 +40,7 @@ public class TokenManager {
             for (Map.Entry<String, TokenAccess> entry : tokens.entrySet()) {
                 if (entry.getValue().getLoginAllegro().equals(loginAllegro)) {
                     TokenAccess tokenAccess = entry.getValue();
-                    if (ExpireRefreshTokenValidator.isValid(tokens.get(loginAllegro)) == false){
+                    if (RefreshTokenValidator.isValid(tokens.get(loginAllegro)) == false){
                         return forceRefreshTokenAccess(loginAllegro);
                     } else if (ExpireTokenValidator.isValid(tokenAccess) == false) {
                         refreshTokenAccess(loginAllegro, 3);
@@ -49,6 +49,21 @@ public class TokenManager {
                 }
             }
             return newTokenAccess(loginAllegro);
+        }
+    }
+
+    public static Boolean isActiveAccessToken(String loginAllegro) throws AllerException {
+        synchronized ( TokenManager.class ) {
+            initTokens();
+            checkConfiguration();
+            if (tokens.containsKey(loginAllegro) == false){
+                return false;
+            }
+            TokenAccess tokenAccess = tokens.get(loginAllegro);
+            if (RefreshTokenValidator.isValid(tokenAccess)){
+                return true;
+            }
+            return false;
         }
     }
 

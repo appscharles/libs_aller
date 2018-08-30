@@ -7,7 +7,7 @@ import java.util.Calendar;
 /**
  * The type Expire refresh token validator.
  */
-public class ExpireRefreshTokenValidator {
+public class RefreshTokenValidator {
 
     /**
      * Is valid boolean.

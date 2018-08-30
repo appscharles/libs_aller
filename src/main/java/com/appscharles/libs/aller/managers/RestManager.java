@@ -252,4 +252,8 @@ public class RestManager {
         TokenAccess tokenAccess = TokenManager.getTokenAccess(loginAllegro);
         return new JwtTokenExtractor(tokenAccess.getToken()).extract().getUsername();
     }
+
+    public static RestManagerConfiguration getConfiguration() {
+        return configuration;
+    }
 }

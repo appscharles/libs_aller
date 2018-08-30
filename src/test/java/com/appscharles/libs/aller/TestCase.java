@@ -11,6 +11,7 @@ import com.appscharles.libs.aller.getters.ResourceContentGetter;
 import com.appscharles.libs.aller.listeners.AuthorizationCodeListener;
 import com.appscharles.libs.aller.listeners.IAuthorizationCodeListener;
 import com.appscharles.libs.aller.managers.LimitManagerConfiguration;
+import com.appscharles.libs.aller.managers.RestManager;
 import com.appscharles.libs.aller.managers.RestManagerConfiguration;
 import com.appscharles.libs.aller.managers.TokenManagerConfiguration;
 import com.appscharles.libs.ioer.services.FileReader;
@@ -92,6 +93,12 @@ public class TestCase {
             );
         } catch (MalformedURLException e) {
             throw new AllerException(e);
+        }
+    }
+
+    public void initRestManager() throws AllerException {
+        if (RestManager.getConfiguration() == null){
+            RestManager.setConfiguration(getRestManagerConfiguration());
         }
     }
 
