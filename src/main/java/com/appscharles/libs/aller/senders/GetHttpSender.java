@@ -38,7 +38,7 @@ public class GetHttpSender extends AbstractHttpSender {
             }
             if (connection.getResponseCode() >= 200 && connection.getResponseCode() <  400) {
                 try (BufferedReader in = new BufferedReader(
-                        new InputStreamReader(connection.getInputStream()))) {
+                        new InputStreamReader(connection.getInputStream(), "UTF-8"))) {
                     String line;
                     content = new StringBuilder();
                     while ((line = in.readLine()) != null) {
@@ -48,7 +48,7 @@ public class GetHttpSender extends AbstractHttpSender {
                 }
             } else {
                 try (BufferedReader in = new BufferedReader(
-                        new InputStreamReader(connection.getErrorStream()))) {
+                        new InputStreamReader(connection.getErrorStream(), "UTF-8"))) {
                     String line;
                     content = new StringBuilder();
                     while ((line = in.readLine()) != null) {

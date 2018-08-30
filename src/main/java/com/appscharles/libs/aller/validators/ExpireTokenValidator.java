@@ -17,7 +17,7 @@ public class ExpireTokenValidator {
      */
     public static boolean isValid(TokenAccess tokenAccess) {
         Calendar now = Calendar.getInstance();
-        Calendar createdAt = tokenAccess.getCreatedAt();
+        Calendar createdAt = (Calendar) tokenAccess.getCreatedAt().clone();
         createdAt.add(Calendar.HOUR_OF_DAY, 8);
         return createdAt.compareTo(now) >= 0;
     }

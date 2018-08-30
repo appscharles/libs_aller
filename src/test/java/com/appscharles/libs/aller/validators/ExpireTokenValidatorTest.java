@@ -4,9 +4,8 @@ import com.appscharles.libs.aller.accesses.TokenAccess;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
-import static org.junit.Assert.*;
 
 /**
  * IDE Editor: IntelliJ IDEA
@@ -32,8 +31,14 @@ public class ExpireTokenValidatorTest {
     @Test
     public void shouldValidateTokenAccess2(){
         TokenAccess tokenAccess = new TokenAccess();
-        Calendar calendar = Calendar.getInstance();
+        Calendar before = Calendar.getInstance();
+        System.out.println("Soon Expire: " + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(before.getTime()));;
+
+        Calendar calendar = (Calendar) before.clone();
         calendar.add( Calendar.HOUR_OF_DAY, -4);
+        System.out.println("Soon Expire: " + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(calendar.getTime()));;
+        System.out.println("Soon Expire: " + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(before.getTime()));;
+
         tokenAccess.setCreatedAt(calendar);
         Assert.assertTrue(ExpireTokenValidator.isValid(tokenAccess));
     }

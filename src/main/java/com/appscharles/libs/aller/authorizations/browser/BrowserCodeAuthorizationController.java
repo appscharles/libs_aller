@@ -140,7 +140,7 @@ public class BrowserCodeAuthorizationController extends AbstractStageControllerF
             throw new AllerException(this.exception.getValue());
         }
         if (this.code == null) {
-            throw new AllerException("Code is null");
+            throw new AllerException("Code is null. [0001-000]");
         }
         return this.code;
     }

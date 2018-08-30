@@ -35,7 +35,6 @@ public class RefreshTokenAuthorizationTest extends TestCase {
         Assert.assertNotNull(refreshTokenAccess.getExpiresIn());
         Assert.assertNotNull(refreshTokenAccess.getJti());
         Assert.assertNotNull(refreshTokenAccess.getRefreshToken());
-        Assert.assertNotNull(refreshTokenAccess.getScope());
         Assert.assertNotNull(refreshTokenAccess.getToken());
         Assert.assertNotNull(refreshTokenAccess.getType());
         Assert.assertNotEquals(tokenAccess.getToken(), refreshTokenAccess.getToken());

@@ -5,6 +5,8 @@ package com.appscharles.libs.aller.exceptions;
  */
 public class AllerException extends Exception {
 
+    // Code is null. [0001-000]
+
     /**
      * The Serial version uid.
      */

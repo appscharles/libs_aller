@@ -33,24 +33,42 @@ public class TokenManager {
      * @return the token access
      * @throws AllerException the aller exception
      */
-    public synchronized static TokenAccess getTokenAccess(String loginAllegro) throws AllerException {
-        initTokens();
-        checkConfiguration();
-        for (Map.Entry<String, TokenAccess> entry : tokens.entrySet()) {
-            if (entry.getValue().getLoginAllegro().equals(loginAllegro)) {
-                TokenAccess tokenAccess = entry.getValue();
-                if (ExpireRefreshTokenValidator.isValid(tokens.get(loginAllegro)) == false){
-                    removeTokenAccess(loginAllegro);
-                    return newTokenAccess(loginAllegro);
-                } else if (ExpireTokenValidator.isValid(tokenAccess) == false) {
-                    refreshTokenAccess(loginAllegro, 3);
+    public static TokenAccess getTokenAccess(String loginAllegro) throws AllerException {
+        synchronized ( TokenManager.class ){
+            initTokens();
+            checkConfiguration();
+            for (Map.Entry<String, TokenAccess> entry : tokens.entrySet()) {
+                if (entry.getValue().getLoginAllegro().equals(loginAllegro)) {
+                    TokenAccess tokenAccess = entry.getValue();
+                    if (ExpireRefreshTokenValidator.isValid(tokens.get(loginAllegro)) == false){
+                        return forceRefreshTokenAccess(loginAllegro);
+                    } else if (ExpireTokenValidator.isValid(tokenAccess) == false) {
+                        refreshTokenAccess(loginAllegro, 3);
+                    }
+                    return tokenAccess;
                 }
-                return tokenAccess;
             }
+            return newTokenAccess(loginAllegro);
         }
-        return newTokenAccess(loginAllegro);
     }
 
+    /**
+     * Force refresh token access token access.
+     *
+     * @param loginAllegro the login allegro
+     * @return the token access
+     */
+    public static TokenAccess forceRefreshTokenAccess(String loginAllegro) throws AllerException {
+    synchronized ( TokenManager.class ) {
+        initTokens();
+        checkConfiguration();
+        TokenAccess tokenAccess = NewTokenAccessBuilder.create(loginAllegro, configuration.getClientId(), configuration.getClientSecret(), configuration.getRedirectPorts(), configuration.getAuthorizationEndPoint()).build();
+        tokens.remove(loginAllegro);
+        tokens.put(loginAllegro, tokenAccess);
+        saveTokens();
+        return tokenAccess;
+    }
+}
 
     /**
      * New token access token access.
@@ -60,15 +78,17 @@ public class TokenManager {
      * @throws AllerException the aller exception
      */
     public static TokenAccess newTokenAccess(String loginAllegro) throws AllerException {
-        initTokens();
-        checkConfiguration();
-        if (tokens.containsKey(loginAllegro)) {
-            throw new AllerException("Token for '" + loginAllegro + "' is exist.");
+        synchronized ( TokenManager.class ) {
+            initTokens();
+            checkConfiguration();
+            if (tokens.containsKey(loginAllegro)) {
+                throw new AllerException("Token for '" + loginAllegro + "' is exist.");
+            }
+            TokenAccess tokenAccess = NewTokenAccessBuilder.create(loginAllegro, configuration.getClientId(), configuration.getClientSecret(), configuration.getRedirectPorts(), configuration.getAuthorizationEndPoint()).build();
+            tokens.put(loginAllegro, tokenAccess);
+            saveTokens();
+            return tokenAccess;
         }
-        TokenAccess tokenAccess = NewTokenAccessBuilder.create(loginAllegro, configuration.getClientId(), configuration.getClientSecret(), configuration.getRedirectPorts(), configuration.getAuthorizationEndPoint()).build();
-        tokens.put(loginAllegro, tokenAccess);
-        saveTokens();
-        return tokenAccess;
     }
 
     /**
@@ -78,12 +98,14 @@ public class TokenManager {
      * @throws AllerException the aller exception
      */
     public static void removeTokenAccess(String loginAllegro) throws AllerException {
-        initTokens();
-        if (tokens.containsKey(loginAllegro) == false) {
-            throw new AllerException("Token '" + loginAllegro + "' is not exist.");
+        synchronized ( TokenManager.class ) {
+            initTokens();
+            if (tokens.containsKey(loginAllegro) == false) {
+                throw new AllerException("Token '" + loginAllegro + "' is not exist.");
+            }
+            tokens.remove(loginAllegro);
+            saveTokens();
         }
-        tokens.remove(loginAllegro);
-        saveTokens();
     }
 
     /**
@@ -95,32 +117,34 @@ public class TokenManager {
      * @throws AllerException the aller exception
      */
     public static TokenAccess refreshTokenAccess(String loginAllegro, Integer attempts) throws AllerException {
-        initTokens();
-        checkConfiguration();
-        if (tokens.containsKey(loginAllegro) == false) {
-            throw new AllerException("Token '" + loginAllegro + "' is not exist.");
-        }
-        Exception exception = null;
-        TokenAccess tokenAccess = null;
-        for (int i = 0; i < attempts; i++) {
-            try {
-                Integer port = AvailablePortGetter.get( configuration.getRedirectPorts());
-                RefreshTokenAuthorization refreshTokenAuthorization = new RefreshTokenAuthorization(configuration.getClientId(), configuration.getClientSecret(), port, tokens.get(loginAllegro).getRefreshToken(), tokens.get(loginAllegro).getRefreshTokenCreatedAt());
-                refreshTokenAuthorization.setAuthorizationEndPoint(configuration.getAuthorizationEndPoint());
-                tokenAccess = refreshTokenAuthorization.getTokenAccess();
-                tokenAccess.setLoginAllegro(loginAllegro);
-                break;
-            } catch (AllerException e) {
-                exception = e;
+        synchronized ( TokenManager.class ) {
+            initTokens();
+            checkConfiguration();
+            if (tokens.containsKey(loginAllegro) == false) {
+                throw new AllerException("Token '" + loginAllegro + "' is not exist.");
             }
+            Exception exception = null;
+            TokenAccess tokenAccess = null;
+            for (int i = 0; i < attempts; i++) {
+                try {
+                    Integer port = AvailablePortGetter.get(configuration.getRedirectPorts());
+                    RefreshTokenAuthorization refreshTokenAuthorization = new RefreshTokenAuthorization(configuration.getClientId(), configuration.getClientSecret(), port, tokens.get(loginAllegro).getRefreshToken(), tokens.get(loginAllegro).getRefreshTokenCreatedAt());
+                    refreshTokenAuthorization.setAuthorizationEndPoint(configuration.getAuthorizationEndPoint());
+                    tokenAccess = refreshTokenAuthorization.getTokenAccess();
+                    tokenAccess.setLoginAllegro(loginAllegro);
+                    break;
+                } catch (AllerException e) {
+                    exception = e;
+                }
+            }
+            if (tokenAccess == null) {
+                throw new AllerException("Can not refresh token '" + loginAllegro + "'.", exception);
+            }
+            removeTokenAccess(loginAllegro);
+            tokens.put(loginAllegro, tokenAccess);
+            saveTokens();
+            return tokenAccess;
         }
-        if (tokenAccess == null) {
-            throw new AllerException("Can not refresh token '" + loginAllegro + "'.", exception);
-        }
-        removeTokenAccess(loginAllegro);
-        tokens.put(loginAllegro, tokenAccess);
-        saveTokens();
-        return tokenAccess;
     }
 
     private static void initTokens() throws AllerException {
@@ -167,4 +191,17 @@ public class TokenManager {
         TokenManager.configuration = configuration;
     }
 
+    /**
+     * Gets tokens.
+     *
+     * @return the tokens
+     * @throws AllerException the aller exception
+     */
+    public static Map<String, TokenAccess> getTokens() throws AllerException {
+        synchronized ( TokenManager.class ) {
+            initTokens();
+            checkConfiguration();
+            return tokens;
+        }
+    }
 }
