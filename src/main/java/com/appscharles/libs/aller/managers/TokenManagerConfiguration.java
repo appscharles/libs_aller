@@ -113,4 +113,13 @@ public class TokenManagerConfiguration {
     public String getSaltPassword() {
         return saltPassword;
     }
+
+    /**
+     * Setter for property 'authorizationEndPoint'.
+     *
+     * @param authorizationEndPoint Value to set for property 'authorizationEndPoint'.
+     */
+    public void setAuthorizationEndPoint(URL authorizationEndPoint) {
+        this.authorizationEndPoint = authorizationEndPoint;
+    }
 }

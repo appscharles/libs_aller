@@ -53,4 +53,12 @@ public class OfferDescriptionConverterTest extends TestCase {
         String content = OfferDescriptionConverter.getString(offer);
         Assert.assertEquals(content, "<p>content offer</p>");
     }
+
+//    @Test
+//    public void shouldGetDescription2() throws AllerException {
+//  initRestManager();
+//        Offer offer = OfferRest.get("7519942222", getLoginAllegro());
+//        String content = OfferDescriptionConverter.getString(offer);
+//        Assert.assertEquals(content, "<p>content offer</p>");
+//    }
 }
