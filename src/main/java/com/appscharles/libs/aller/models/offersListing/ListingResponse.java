@@ -1,10 +1,13 @@
 package com.appscharles.libs.aller.models.offersListing;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 /**
  * The type Listing response.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ListingResponse {
 
     private ListingResponseOffers items;

@@ -1,8 +1,11 @@
 package com.appscharles.libs.aller.models.offersListing;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * The type Listing response search meta.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ListingResponseSearchMeta {
 
     private Integer availableCount;

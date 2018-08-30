@@ -1,12 +1,14 @@
 package com.appscharles.libs.aller.models.offersListing;
 
 import com.appscharles.libs.aller.models.offersListing.enums.Filters;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
 /**
  * The type Listing response filter.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ListingResponseFilter {
 
     private String id;
