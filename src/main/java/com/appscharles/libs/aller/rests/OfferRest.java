@@ -47,11 +47,11 @@ public class OfferRest {
     }
 
     /**
-     * Add with publish uuid.
+     * Add with publish offer.
      *
      * @param offer        the offer
      * @param loginAllegro the login allegro
-     * @return the uuid
+     * @return the offer
      * @throws AllerException the aller exception
      */
     public static Offer addWithPublish(Offer offer, String loginAllegro) throws AllerException {
@@ -95,11 +95,53 @@ public class OfferRest {
     }
 
     /**
-     * Close uuid.
+     * Publish offer.
      *
      * @param offer        the offer
      * @param loginAllegro the login allegro
-     * @return the uuid
+     * @return the offer
+     * @throws AllerException the aller exception
+     */
+    public static Offer publish(Offer offer, String loginAllegro) throws AllerException {
+        if (offer.getId() == null){
+            throw new AllerException("Use method addAndPublish");
+        }
+        UUID uuid = UUID.randomUUID();
+        PublicationChangeCommand command = new PublicationChangeCommand(Arrays.asList(new OfferCriterium(Arrays.asList(new OfferId(offer.getId())), CriteriaType.CONTAINS_OFFERS)), new Publication(Action.ACTIVATE));
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, 1);
+        command.getPublication().setScheduledFor(calendar);
+        OfferPublicationCommandsRest.put(command, uuid.toString(),loginAllegro);
+        long timeout = System.currentTimeMillis() + timeoutTaskReport;
+        while (System.currentTimeMillis() < timeout) {
+            try {
+                Thread.sleep(700);
+                TaskReport taskReport = OfferPublicationCommandsRest.getTaskReport(uuid.toString(), loginAllegro);
+                if (taskReport.getTasks().size() == 0){
+                    throw new AllerException("Failed task report: " +  new ObjectMapper().writeValueAsString(taskReport));
+                }
+                if (taskReport.getTasks().get(0).getStatus().equals(Status.NEW)){
+                    continue;
+                } else if (taskReport.getTasks().get(0).getStatus().equals(Status.FAIL)){
+                    throw new AllerException("Failed in task report publish offer "+offer.getId()+": " + taskReport.getTasks().get(0).getMessage());
+                } else if (taskReport.getTasks().get(0).getStatus().equals(Status.SUCCESS)){
+                    return offer;
+                }
+            } catch (InterruptedException | JsonProcessingException e) {
+                throw new AllerException(e);
+            }
+        }
+        PublicationChangeCommand commandClose = new PublicationChangeCommand(Arrays.asList(new OfferCriterium(Arrays.asList(new OfferId(offer.getId())), CriteriaType.CONTAINS_OFFERS)), new Publication(Action.END));
+        OfferPublicationCommandsRest.put(commandClose, UUID.randomUUID().toString(),loginAllegro);
+        throw new AllerException("Timeout wait for task report. Call command close offer "+offer.getId()+".");
+    }
+
+    /**
+     * Close offer.
+     *
+     * @param offer        the offer
+     * @param loginAllegro the login allegro
+     * @return the offer
      * @throws AllerException the aller exception
      */
     public static Offer close(Offer offer, String loginAllegro) throws AllerException {
