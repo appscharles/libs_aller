@@ -1,5 +1,7 @@
 package com.appscharles.libs.aller.models.pointsOfServices;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Calendar;
 
 /**
@@ -55,6 +57,7 @@ public class OpenHour {
      *
      * @return the from
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     public Calendar getFrom() {
         return from;
     }
@@ -73,6 +76,7 @@ public class OpenHour {
      *
      * @return the to
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     public Calendar getTo() {
         return to;
     }

@@ -1,6 +1,7 @@
 package com.appscharles.libs.aller.models.publicationChangeCommand;
 
 import com.appscharles.libs.aller.models.publicationChangeCommand.enums.Action;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Calendar;
 
@@ -51,6 +52,7 @@ public class Publication {
      *
      * @return the scheduled for
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     public Calendar getScheduledFor() {
         return scheduledFor;
     }

@@ -1,5 +1,7 @@
 package com.appscharles.libs.aller.models.offers;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -55,6 +57,7 @@ public class Validation {
      *
      * @return the validated at
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     public Calendar getValidatedAt() {
         return validatedAt;
     }

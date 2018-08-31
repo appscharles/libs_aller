@@ -1,5 +1,7 @@
 package com.appscharles.libs.aller.models.offers;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Calendar;
 
 /**
@@ -67,6 +69,7 @@ public class Delivery {
      *
      * @return the shipment date
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     public Calendar getShipmentDate() {
         return shipmentDate;
     }

@@ -323,6 +323,7 @@ public class PointOfService {
      *
      * @param createdAt the created at
      */
+
     public void setCreatedAt(Calendar createdAt) {
         this.createdAt = createdAt;
     }
