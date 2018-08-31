@@ -140,19 +140,15 @@ public class OfferRest {
     }
 
     /**
-     * Close offer.
+     * Close.
      *
-     * @param offer        the offer
+     * @param offerId      the offer id
      * @param loginAllegro the login allegro
-     * @return the offer
      * @throws AllerException the aller exception
      */
-    public static Offer close(Offer offer, String loginAllegro) throws AllerException {
-        if (offer.getId() == null){
-            throw new AllerException("Offer "+offer.getId()+" has't offer ID added");
-        }
+    public static void close(String offerId, String loginAllegro) throws AllerException {
         UUID uuid = UUID.randomUUID();
-        PublicationChangeCommand command = new PublicationChangeCommand(Arrays.asList(new OfferCriterium(Arrays.asList(new OfferId(offer.getId())), CriteriaType.CONTAINS_OFFERS)), new Publication(Action.END));
+        PublicationChangeCommand command = new PublicationChangeCommand(Arrays.asList(new OfferCriterium(Arrays.asList(new OfferId(offerId)), CriteriaType.CONTAINS_OFFERS)), new Publication(Action.END));
         OfferPublicationCommandsRest.put(command, uuid.toString(),loginAllegro);
         long timeout = System.currentTimeMillis() + timeoutTaskReport;
         while (System.currentTimeMillis() < timeout) {
@@ -162,15 +158,13 @@ public class OfferRest {
                 if (taskReport.getTasks().get(0).getStatus().equals(Status.NEW)){
                     continue;
                 } else if (taskReport.getTasks().get(0).getStatus().equals(Status.FAIL)){
-                    throw new AllerException("Failed in task report publish offer "+offer.getId()+": " + taskReport.getTasks().get(0).getMessage());
-                } else if (taskReport.getTasks().get(0).getStatus().equals(Status.SUCCESS)){
-                    return offer;
+                    throw new AllerException("Failed in task report publish offer "+offerId+": " + taskReport.getTasks().get(0).getMessage());
                 }
             } catch (InterruptedException e) {
                 throw new AllerException(e);
             }
         }
-        throw new AllerException("Timeout wait for task report for close offer: " +offer.getId());
+        throw new AllerException("Timeout wait for task report for close offer: " +offerId);
     }
 
     /**
