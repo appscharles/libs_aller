@@ -127,8 +127,8 @@ public class OfferRestTest extends TestCase {
                 new Location("city", "23-400", "WIELKOPOLSKIE","PL"));
         offer = OfferRest.addWithPublish(offer, getLoginAllegro());
         OfferRest.publish(offer, getLoginAllegro());
-        OfferRest.close(offer, getLoginAllegro());
-        OfferRest.close(offer, getLoginAllegro());
+        OfferRest.close(offer.getId(), getLoginAllegro());
+        OfferRest.close(offer.getId(), getLoginAllegro());
         OfferRest.publish(offer, getLoginAllegro());
     }
 }
