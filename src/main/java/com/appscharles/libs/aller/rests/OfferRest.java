@@ -30,7 +30,7 @@ public class OfferRest {
 
     private static final String RESOURCE = "sale/offers";
 
-    private static long timeoutTaskReport = 60000;
+    private static long timeoutTaskReport = 10 * 60000;
 
     /**
      * Add offer.
@@ -47,16 +47,16 @@ public class OfferRest {
     }
 
     /**
-     * Add with publish offer.
+     * Add with publish uuid.
      *
      * @param offer        the offer
      * @param loginAllegro the login allegro
-     * @return the offer
+     * @return the uuid
      * @throws AllerException the aller exception
      */
-    public static UUID addWithPublish(Offer offer, String loginAllegro) throws AllerException {
+    public static Offer addWithPublish(Offer offer, String loginAllegro) throws AllerException {
         if (offer.getId() != null){
-            throw new AllerException("Offer "+offer.getId()+" has been added: " + offer.getId());
+            throw new AllerException("Offer has been added: " + offer.getId());
         }
         offer = add(offer, loginAllegro);
         if (offer.getValidation().getErrors().size() > 0) {
@@ -83,7 +83,7 @@ public class OfferRest {
                 } else if (taskReport.getTasks().get(0).getStatus().equals(Status.FAIL)){
                     throw new AllerException("Failed in task report publish offer "+offer.getId()+": " + taskReport.getTasks().get(0).getMessage());
                 } else if (taskReport.getTasks().get(0).getStatus().equals(Status.SUCCESS)){
-                    return uuid;
+                    return offer;
                 }
             } catch (InterruptedException e) {
                 throw new AllerException(e);
@@ -92,6 +92,40 @@ public class OfferRest {
         PublicationChangeCommand commandClose = new PublicationChangeCommand(Arrays.asList(new OfferCriterium(Arrays.asList(new OfferId(offer.getId())), CriteriaType.CONTAINS_OFFERS)), new Publication(Action.END));
         OfferPublicationCommandsRest.put(commandClose, UUID.randomUUID().toString(),loginAllegro);
         throw new AllerException("Timeout wait for task report. Call command close offer "+offer.getId()+".");
+    }
+
+    /**
+     * Close uuid.
+     *
+     * @param offer        the offer
+     * @param loginAllegro the login allegro
+     * @return the uuid
+     * @throws AllerException the aller exception
+     */
+    public static Offer close(Offer offer, String loginAllegro) throws AllerException {
+        if (offer.getId() == null){
+            throw new AllerException("Offer "+offer.getId()+" has't offer ID added");
+        }
+        UUID uuid = UUID.randomUUID();
+        PublicationChangeCommand command = new PublicationChangeCommand(Arrays.asList(new OfferCriterium(Arrays.asList(new OfferId(offer.getId())), CriteriaType.CONTAINS_OFFERS)), new Publication(Action.END));
+        OfferPublicationCommandsRest.put(command, uuid.toString(),loginAllegro);
+        long timeout = System.currentTimeMillis() + timeoutTaskReport;
+        while (System.currentTimeMillis() < timeout) {
+            try {
+                Thread.sleep(700);
+                TaskReport taskReport = OfferPublicationCommandsRest.getTaskReport(uuid.toString(), loginAllegro);
+                if (taskReport.getTasks().get(0).getStatus().equals(Status.NEW)){
+                    continue;
+                } else if (taskReport.getTasks().get(0).getStatus().equals(Status.FAIL)){
+                    throw new AllerException("Failed in task report publish offer "+offer.getId()+": " + taskReport.getTasks().get(0).getMessage());
+                } else if (taskReport.getTasks().get(0).getStatus().equals(Status.SUCCESS)){
+                    return offer;
+                }
+            } catch (InterruptedException e) {
+                throw new AllerException(e);
+            }
+        }
+        throw new AllerException("Timeout wait for task report for close offer: " +offer.getId());
     }
 
     /**

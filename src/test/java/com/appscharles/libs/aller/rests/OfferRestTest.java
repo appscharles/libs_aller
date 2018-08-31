@@ -125,7 +125,8 @@ public class OfferRestTest extends TestCase {
                 delivery,
                 new Payments(InvoiceType.NO_INVOICE),
                 new Location("city", "23-400", "WIELKOPOLSKIE","PL"));
-        OfferRest.addWithPublish(offer, getLoginAllegro());
+        offer = OfferRest.addWithPublish(offer, getLoginAllegro());
+        OfferRest.close(offer, getLoginAllegro());
+        OfferRest.close(offer, getLoginAllegro());
     }
-
 }
