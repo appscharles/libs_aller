@@ -7,11 +7,11 @@ import java.util.Calendar;
  */
 public class OpenHour {
 
-        private DayOfWeek dayOfWeek;
+    private DayOfWeek dayOfWeek;
 
-        private Calendar from;
+    private Calendar from;
 
-        private Calendar to;
+    private Calendar to;
 
     /**
      * Instantiates a new Open hour.

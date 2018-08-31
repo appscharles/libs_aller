@@ -35,9 +35,14 @@ public class ShippingRatesRestTest extends TestCase {
     @Test
     public void shouldAddShippingRate() throws AllerException {
         RestManager.setConfiguration(getRestManagerConfiguration());
-        List<DeliveryMethod> deliveryMethods = DeliveryMethodRest.getAll(getLoginAllegro());
-        ShippingRate shippingRate = new ShippingRate("ShippingName", Arrays.asList(new Rate(deliveryMethods.get(0), 1, new ItemRate("12.12", "PLN"), new ItemRate("13.22", "PLN"), new ShippingTime("PT72H", "PT120H"))));
-        shippingRate = ShippingRatesRest.add(shippingRate, getLoginAllegro());
+        ShippingRate shippingRate = null;
+        for (ShippingRate rate : ShippingRatesRest.getAll(RestManager.getSellerId(getLoginAllegro()), getLoginAllegro())) {
+            shippingRate = ShippingRatesRest.get(rate.getId(), getLoginAllegro());
+            break;
+        }
+        if (shippingRate == null || shippingRate.getRates() == null){
+            throw new AllerException("Shipping rate is null, add shipping rate");
+        }
         Assert.assertNotNull(shippingRate.getId());
     }
 

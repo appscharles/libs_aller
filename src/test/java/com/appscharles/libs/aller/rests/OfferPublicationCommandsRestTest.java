@@ -4,7 +4,6 @@ import com.appscharles.libs.aller.TestCase;
 import com.appscharles.libs.aller.exceptions.AllerException;
 import com.appscharles.libs.aller.getters.RegularSellerAuctionGetter;
 import com.appscharles.libs.aller.managers.RestManager;
-import com.appscharles.libs.aller.models.DeliveryMethod;
 import com.appscharles.libs.aller.models.Offer;
 import com.appscharles.libs.aller.models.PublicationChangeCommand;
 import com.appscharles.libs.aller.models.ShippingRate;
@@ -18,14 +17,10 @@ import com.appscharles.libs.aller.models.publicationChangeCommand.*;
 import com.appscharles.libs.aller.models.publicationChangeCommand.Publication;
 import com.appscharles.libs.aller.models.publicationChangeCommand.enums.Action;
 import com.appscharles.libs.aller.models.publicationChangeCommand.enums.CriteriaType;
-import com.appscharles.libs.aller.models.shippingRate.ItemRate;
-import com.appscharles.libs.aller.models.shippingRate.Rate;
-import com.appscharles.libs.aller.models.shippingRate.ShippingTime;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -42,9 +37,14 @@ public class OfferPublicationCommandsRestTest extends TestCase {
     @Test
     public void shouldGetGeneralReport() throws AllerException {
         RestManager.setConfiguration(getRestManagerConfiguration());
-        List<DeliveryMethod> deliveryMethods = DeliveryMethodRest.getAll(getLoginAllegro());
-        ShippingRate shippingRate = new ShippingRate("ShippingName", Arrays.asList(new Rate(deliveryMethods.get(0), 1, new ItemRate("12.12", "PLN"), new ItemRate("13.22", "PLN"), new ShippingTime("PT72H", "PT120H"))));
-        shippingRate = ShippingRatesRest.add(shippingRate, getLoginAllegro());
+        ShippingRate shippingRate = null;
+        for (ShippingRate rate : ShippingRatesRest.getAll(RestManager.getSellerId(getLoginAllegro()), getLoginAllegro())) {
+            shippingRate = ShippingRatesRest.get(rate.getId(), getLoginAllegro());
+            break;
+        }
+        if (shippingRate == null || shippingRate.getRates() == null){
+            throw new AllerException("Shipping rate is null, add shipping rate");
+        }
         Offer offer = new Offer("My offer public", new Category("14237"),
                 Arrays.asList(new Parameter("11323", Arrays.asList("11323_1"))),
                 new OfferDescription(Arrays.asList(new DescriptionSection(

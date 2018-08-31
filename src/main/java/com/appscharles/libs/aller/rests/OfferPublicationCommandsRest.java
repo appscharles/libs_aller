@@ -46,6 +46,14 @@ public class OfferPublicationCommandsRest {
         return JsonToObjectConverter.convert(response, GeneralReport.class);
     }
 
+    /**
+     * Gets task report.
+     *
+     * @param guid         the guid
+     * @param loginAllegro the login allegro
+     * @return the task report
+     * @throws AllerException the aller exception
+     */
     public static TaskReport getTaskReport(String guid, String loginAllegro) throws AllerException {
         String response = RestManager.get(RESOURCE + "/" + guid +"/tasks", API_VERSION, loginAllegro);
         return JsonToObjectConverter.convert(response, TaskReport.class);
