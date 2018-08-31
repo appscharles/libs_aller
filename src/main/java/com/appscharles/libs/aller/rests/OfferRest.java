@@ -78,6 +78,9 @@ public class OfferRest {
             try {
                 Thread.sleep(700);
                 TaskReport taskReport = OfferPublicationCommandsRest.getTaskReport(uuid.toString(), loginAllegro);
+                if (taskReport.getTasks().size() == 0){
+                    throw new AllerException("Failed task report: " +  new ObjectMapper().writeValueAsString(taskReport));
+                }
                 if (taskReport.getTasks().get(0).getStatus().equals(Status.NEW)){
                     continue;
                 } else if (taskReport.getTasks().get(0).getStatus().equals(Status.FAIL)){
@@ -85,7 +88,7 @@ public class OfferRest {
                 } else if (taskReport.getTasks().get(0).getStatus().equals(Status.SUCCESS)){
                     return offer;
                 }
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | JsonProcessingException e) {
                 throw new AllerException(e);
             }
         }
