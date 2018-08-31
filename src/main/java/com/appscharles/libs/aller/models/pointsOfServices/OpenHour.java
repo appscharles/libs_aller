@@ -1,9 +1,5 @@
 package com.appscharles.libs.aller.models.pointsOfServices;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Calendar;
-
 /**
  * The type Open hour.
  */
@@ -11,9 +7,9 @@ public class OpenHour {
 
     private DayOfWeek dayOfWeek;
 
-    private Calendar from;
+    private String from;
 
-    private Calendar to;
+    private String to;
 
     /**
      * Instantiates a new Open hour.
@@ -28,7 +24,7 @@ public class OpenHour {
      * @param from      the from
      * @param to        the to
      */
-    public OpenHour(DayOfWeek dayOfWeek, Calendar from, Calendar to) {
+    public OpenHour(DayOfWeek dayOfWeek, String from, String to) {
         this.dayOfWeek = dayOfWeek;
         this.from = from;
         this.to = to;
@@ -57,8 +53,7 @@ public class OpenHour {
      *
      * @return the from
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-    public Calendar getFrom() {
+    public String getFrom() {
         return from;
     }
 
@@ -67,7 +62,7 @@ public class OpenHour {
      *
      * @param from the from
      */
-    public void setFrom(Calendar from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
@@ -76,8 +71,7 @@ public class OpenHour {
      *
      * @return the to
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-    public Calendar getTo() {
+    public String getTo() {
         return to;
     }
 
@@ -86,7 +80,7 @@ public class OpenHour {
      *
      * @param to the to
      */
-    public void setTo(Calendar to) {
+    public void setTo(String to) {
         this.to = to;
     }
 }

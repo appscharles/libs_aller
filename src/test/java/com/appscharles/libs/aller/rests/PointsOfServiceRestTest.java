@@ -6,12 +6,15 @@ import com.appscharles.libs.aller.managers.RestManager;
 import com.appscharles.libs.aller.models.PointOfService;
 import com.appscharles.libs.aller.models.Seller;
 import com.appscharles.libs.aller.models.pointsOfServices.Address;
+import com.appscharles.libs.aller.models.pointsOfServices.DayOfWeek;
+import com.appscharles.libs.aller.models.pointsOfServices.OpenHour;
 import com.appscharles.libs.aller.models.pointsOfServices.enums.ConfirmationType;
 import com.appscharles.libs.aller.models.pointsOfServices.enums.Status;
 import com.appscharles.libs.aller.models.pointsOfServices.enums.Type;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -68,6 +71,9 @@ public class PointsOfServiceRestTest extends TestCase {
         PointOfService pointsOfService = new PointOfService("My point",
                 new Seller(sellerId), Type.PICKUP_POINT, new Address("Street", "City", "45-300", "świętokrzyskie", "PL"),
                 ConfirmationType.CALL_US, Status.ACTIVE);
+        Calendar to = Calendar.getInstance();
+        to.add(Calendar.HOUR, 2);
+        pointsOfService.getOpenHours().add(new OpenHour(DayOfWeek.MONDAY, "08:00:00.000", "09:00:00.000"));
         pointsOfService = PointOfServiceRest.add(pointsOfService, getLoginAllegro());
         pointsOfService.setName("New name");
         pointsOfService = PointOfServiceRest.update(pointsOfService, getLoginAllegro());

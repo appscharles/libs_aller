@@ -1,7 +1,6 @@
 package com.appscharles.libs.aller.models.offers;
 
 import com.appscharles.libs.aller.models.offers.enums.Status;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Calendar;
 
@@ -51,7 +50,6 @@ public class Publication {
      *
      * @return Value for property 'endingAt'.
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     public Calendar getEndingAt() {
         return endingAt;
     }
@@ -70,7 +68,6 @@ public class Publication {
      *
      * @return Value for property 'startingAt'.
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     public Calendar getStartingAt() {
         return startingAt;
     }
