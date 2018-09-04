@@ -84,10 +84,10 @@ public class BrowserCodeAuthorizationController extends AbstractStageControllerF
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
+        this.login.setText(this.configuration.getLoginAllegro());
         this.resourceBundle = resourceBundle;
         Platform.runLater(() -> {
             this.fXStage.setTitle(this.resourceBundle.getString("stage.title"));
-            this.login.setText(this.configuration.getLoginAllegro());
         });
         this.webEngine = this.webView.getEngine();
         this.webEngine.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36");

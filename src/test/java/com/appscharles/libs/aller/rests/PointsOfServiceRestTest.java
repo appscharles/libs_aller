@@ -91,4 +91,5 @@ public class PointsOfServiceRestTest extends TestCase {
         }
         Assert.assertTrue(PointOfServiceRest.getAll(sellerId, getLoginAllegro()).size() == 0);
     }
+
 }

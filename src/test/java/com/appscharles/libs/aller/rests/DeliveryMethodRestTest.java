@@ -4,9 +4,14 @@ import com.appscharles.libs.aller.TestCase;
 import com.appscharles.libs.aller.exceptions.AllerException;
 import com.appscharles.libs.aller.managers.RestManager;
 import com.appscharles.libs.aller.models.DeliveryMethod;
+import com.appscharles.libs.aller.models.ShippingRate;
+import com.appscharles.libs.aller.models.offers.Delivery;
+import com.appscharles.libs.aller.models.shippingRate.Rate;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,4 +31,6 @@ public class DeliveryMethodRestTest extends TestCase {
         List<DeliveryMethod> deliveryMethods = DeliveryMethodRest.getAll(getLoginAllegro());
         Assert.assertTrue(deliveryMethods.size()>0);
     }
+
+
 }

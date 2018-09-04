@@ -24,7 +24,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.UUID;
 
 /**
@@ -148,9 +147,6 @@ public class OfferRestTest extends TestCase {
         }
         UUID uuid = UUID.randomUUID();
         PublicationChangeCommand command = new PublicationChangeCommand(Arrays.asList(new OfferCriterium(Arrays.asList(new OfferId(offer.getId())), CriteriaType.CONTAINS_OFFERS)), new Publication(Action.ACTIVATE));
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, 1);
-        command.getPublication().setScheduledFor(calendar);
         OfferPublicationCommandsRest.put(command, uuid.toString(), getLoginAllegro());
         TaskReport taskReport2 = OfferPublicationCommandsRest.getTaskReport(uuid.toString(), getLoginAllegro());
         long timeout = System.currentTimeMillis() + 60000;
