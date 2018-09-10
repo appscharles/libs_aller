@@ -36,8 +36,8 @@ public class AuctionGetter {
      */
     public List<ListingOffer> get(Map<String, String> urlParameters, String loginAllegro) throws AllerException {
         List<ListingOffer> offers = new ArrayList<>();
-        for (int i = 0; i < this.maxNumber ; i +=this.limit){
-            urlParameters.put("offset", String.valueOf((i ==0) ? 0 : (this.limit + 1)));
+        for (int i = 0; i < this.maxNumber ; i += this.limit + 1){
+            urlParameters.put("offset", String.valueOf(i));
             urlParameters.put("limit", String.valueOf(this.limit + 1));
             ListingResponse response = OffersListingRest.get(urlParameters, loginAllegro);
             List<ListingOffer> promotedOffers = response.getItems().getPromoted();
