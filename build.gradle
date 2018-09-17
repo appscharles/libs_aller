@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.appscharles.libs'
-version '1.0.0.0-dev26'
+version '1.0.0.0-dev27'
 
 sourceCompatibility = 1.8
 
@@ -19,7 +19,6 @@ repositories {
         url 'http://dl.bintray.com/appscharles/libs'
     }
 }
-
 dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
     compile group: 'com.appscharles.libs', name: 'proper', version: '1.0.0.0-dev1'

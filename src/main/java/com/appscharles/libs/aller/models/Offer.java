@@ -1,6 +1,7 @@
 package com.appscharles.libs.aller.models;
 
 import com.appscharles.libs.aller.models.offers.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Calendar;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * The type Offer.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Offer {
 
     private String id;
