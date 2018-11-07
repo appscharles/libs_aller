@@ -6,7 +6,6 @@ import com.appscharles.libs.aller.exceptions.AllerException;
 import com.appscharles.libs.aller.senders.GetHttpSender;
 import com.appscharles.libs.aller.senders.rest.ApiVersion;
 import com.appscharles.libs.aller.senders.rest.RequestRestSender;
-import com.sun.javafx.application.PlatformImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,6 +38,8 @@ public class TokenManagerTest extends TestCase {
         initRestManager();
         TokenAccess tokenAccess = TokenManager.getTokenAccess(getProperties().getProperty("libs_aller.test.login_allegro"));
         TokenManager.refreshTokenAccess(getProperties().getProperty("libs_aller.test.login_allegro"), 3);
+        tokenAccess = TokenManager.getTokenAccess(getProperties().getProperty("libs_aller.test.login_allegro"));
+
         RequestRestSender sender = new RequestRestSender(new GetHttpSender(new URL("https://api.allegro.pl.allegrosandbox.pl/sale/delivery-methods")), ApiVersion.V1, tokenAccess.getToken(), false);
         Assert.assertTrue(sender.getResponse().contains("id\":"));
         RequestRestSender sender2 = new RequestRestSender(new GetHttpSender(new URL("https://api.allegro.pl.allegrosandbox.pl/sale/delivery-methods")), ApiVersion.V1, tokenAccess.getToken(), false);

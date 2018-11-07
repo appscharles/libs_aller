@@ -1,5 +1,7 @@
 package com.appscharles.libs.aller.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * IDE Editor: IntelliJ IDEA
  * <p>
@@ -9,6 +11,7 @@ package com.appscharles.libs.aller.models;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DeliveryMethod {
 
     private String id;

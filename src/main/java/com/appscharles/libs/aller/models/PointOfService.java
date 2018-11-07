@@ -6,6 +6,7 @@ import com.appscharles.libs.aller.models.pointsOfServices.Payment;
 import com.appscharles.libs.aller.models.pointsOfServices.enums.ConfirmationType;
 import com.appscharles.libs.aller.models.pointsOfServices.enums.Status;
 import com.appscharles.libs.aller.models.pointsOfServices.enums.Type;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * The type Points of service.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PointOfService {
 
     private String id;

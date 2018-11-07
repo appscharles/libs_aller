@@ -3,6 +3,7 @@ package com.appscharles.libs.aller.senders.rest;
 import com.appscharles.libs.aller.TestCase;
 import com.appscharles.libs.aller.accesses.TokenAccess;
 import com.appscharles.libs.aller.exceptions.AllerException;
+import com.appscharles.libs.aller.managers.RestManager;
 import com.appscharles.libs.aller.senders.GetHttpSender;
 import com.appscharles.libs.aller.senders.IHttpSender;
 import org.junit.Assert;
@@ -25,9 +26,10 @@ public class RequestRestSenderTest extends TestCase {
 
     @Test
     public void shouldGetResponse() throws MalformedURLException, AllerException {
-
-        IHttpSender sender = new GetHttpSender(new URL("https://api.allegro.pl.allegrosandbox.pl/categories/2"));
-        RequestRestSender restSender = new RequestRestSender(sender, ApiVersion.V1, null, false);
+        RestManager.setConfiguration(getRestManagerConfiguration());
+        IHttpSender sender = new GetHttpSender(new URL("https://api.allegro.pl.allegrosandbox.pl/sale/categories/2"));
+        TokenAccess access = getTokenAccess();
+        RequestRestSender restSender = new RequestRestSender(sender, ApiVersion.V1, access.getToken(), true);
         Assert.assertTrue(restSender.getResponse().contains("id\":"));
     }
 
