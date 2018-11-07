@@ -80,7 +80,7 @@ public class TestCase {
     }
 
     public File getFileConfigurationTokens() {
-        return new File("E:\\others\\aller_test\\tokens.data");
+        return new File("E:\\others\\aller_test\\tokens2.data");
     }
 
     public RestManagerConfiguration getRestManagerConfiguration() throws AllerException {
