@@ -11,5 +11,5 @@ package com.appscharles.libs.aller.models.offers.enums;
  */
 public enum Status {
 
-    INACTIVE, ACTIVATING, ACTIVE, ENDED
+    INACTIVE, ACTIVATING, ACTIVE, ENDED, ARCHIVED
 }
